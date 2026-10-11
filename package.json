@@ -1,0 +1,38 @@
+{
+  "name": "algorithm-studio",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite dev --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "vite build",
+    "start": "vinext start --hostname 127.0.0.1 --port 5173",
+    "test": "node --test tests/*.test.js",
+    "test:components": "vitest run",
+    "check": "npm test && npm run test:components && npm run build",
+    "format": "prettier --write app components features hooks lib styles tests docs *.js *.json README.md"
+  },
+  "dependencies": {
+    "chess.js": "^1.4.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-server-dom-webpack": "^19.2.6",
+    "vinext": "^1.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^6.0.0",
+    "@vitejs/plugin-rsc": "^0.5.34",
+    "jsdom": "^28.1.0",
+    "prettier": "^3.6.2",
+    "vite": "^8.0.0",
+    "vitest": "^4.0.0"
+  },
+  "overrides": {
+    "fflate": "^0.8.3"
+  }
+}
