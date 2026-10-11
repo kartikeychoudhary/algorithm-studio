@@ -52,7 +52,6 @@ export default function Studio({ lessonId }) {
           <div className="lesson-heading">
             <div>
               <div className="eyebrow">
-                <span className="lesson-number">LESSON {lesson.number}</span>
                 <span>{lesson.tag}</span>
               </div>
               <h1>{lesson.title}</h1>

@@ -193,11 +193,16 @@ test("all default traces end on a valid code line and snapshots are independent"
   for (const [id, lesson] of Object.entries(interviewLessons)) {
     const problem = parseProblem(
         id,
-        lesson.values.join(","),
+        JSON.stringify(lesson.values),
         lesson.parameter?.value,
         lesson.edges,
       ),
       run = runInterview(id, problem);
+    assert.deepEqual(
+      run.result,
+      lesson.problem.expected,
+      `${id} must match the worked example`,
+    );
     assert.ok(run.events.length > 1);
     assert.equal(run.events.at(-1).done, true);
     for (const e of run.events)
@@ -215,10 +220,63 @@ test("input validation rejects ambiguous or unsafe teaching examples", () => {
     ["subsets", "1,1"],
     ["coins", "0,2", 5],
     ["coins", "1,2", -1],
+    ["binary", "[3,1,2]", 1],
+    ["pointers", "[2,1]", 3],
+    ["merge", "[-1,100]"],
+    ["merge", "[1,101]"],
+    ["tree", "[1,null,null,2]"],
+    ["stack", "[20,40]"],
     ["topo", "", 3, "0>3"],
     ["topo", "", 3, "0>1,0>1"],
     ["topo", "", 3, "oops"],
   ])
     assert.throws(() => parseProblem(...args));
   assert.deepEqual(parseProblem("topo", "", 3, "").edges, []);
+});
+
+test("LeetCode sparse trees preserve child relationships and allow an empty root", () => {
+  const run = runInterview("tree", parseProblem("tree", "[1,null,2,3]"));
+  assert.deepEqual(run.result, [1, 3, 2]);
+  assert.deepEqual(
+    run.events[0].treeNodes.map(({ left, right }) => [left, right]),
+    [
+      [null, 1],
+      [2, null],
+      [null, null],
+    ],
+  );
+  assert.deepEqual(runInterview("tree", parseProblem("tree", "[]")).result, []);
+  assert.deepEqual(
+    runInterview("linked", parseProblem("linked", "[]")).result,
+    [],
+  );
+});
+
+test("course input uses [course, prerequisite] and returns [] for a cycle", () => {
+  const problem = parseProblem("topo", "", 3, "[[0,2],[1,0]]");
+  assert.deepEqual(runInterview("topo", problem).result, [2, 0, 1]);
+  assert.deepEqual(
+    runInterview("topo", parseProblem("topo", "", 2, "[[0,1],[1,0]]")).result,
+    [],
+  );
+});
+
+test("all presets use valid judge inputs, including zero-height sorting values", () => {
+  for (const [id, lesson] of Object.entries(interviewLessons))
+    for (const preset of lesson.presets) {
+      const run = runInterview(
+        id,
+        parseProblem(
+          id,
+          JSON.stringify(preset.values),
+          preset.parameter,
+          preset.edges,
+        ),
+      );
+      assert.equal(run.events.at(-1).done, true, `${id}: ${preset.name}`);
+    }
+  assert.deepEqual(
+    runInterview("merge", parseProblem("merge", "[100,0,1]")).result,
+    [0, 1, 100],
+  );
 });

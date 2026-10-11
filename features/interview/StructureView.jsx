@@ -6,13 +6,38 @@ export default function StructureView({ event, kind }) {
     n = values.length;
   const tree = kind === "tree" || kind === "heap",
     list = kind === "linked";
-  const width = list ? Math.max(720, n * 100) : 720;
+  const width = list
+    ? Math.max(720, n * 100)
+    : kind === "tree"
+      ? Math.max(720, n * 70)
+      : 720;
+  const ranks = new Map();
+  function rank(node) {
+    if (node === null || node === undefined) return;
+    rank(event.treeNodes[node].left);
+    ranks.set(node, ranks.size);
+    rank(event.treeNodes[node].right);
+  }
+  if (kind === "tree" && n) rank(0);
   const height = list
     ? 220
     : tree
-      ? Math.max(260, Math.floor(Math.log2(Math.max(1, n))) * 78 + 105)
+      ? Math.max(
+          260,
+          (kind === "tree"
+            ? Math.max(0, ...event.treeNodes.map((node) => node.depth))
+            : Math.floor(Math.log2(Math.max(1, n)))) *
+            78 +
+            105,
+        )
       : 340;
   const nodes = values.map((value, i) => {
+    if (kind === "tree")
+      return {
+        x: 45 + ranks.get(i) * ((width - 90) / Math.max(1, n - 1)),
+        y: 42 + event.treeNodes[i].depth * 78,
+        value,
+      };
     if (tree) {
       const depth = Math.floor(Math.log2(i + 1)),
         offset = i - (2 ** depth - 1);
@@ -31,16 +56,23 @@ export default function StructureView({ event, kind }) {
       value,
     };
   });
-  const edges = tree
-    ? values.flatMap((_, i) => (i ? [[Math.floor((i - 1) / 2), i]] : []))
-    : list
-      ? event.next.flatMap((to, from) => (to === null ? [] : [[from, to]]))
-      : event.edges;
+  const edges =
+    kind === "tree"
+      ? event.treeNodes.flatMap((node, from) =>
+          [node.left, node.right]
+            .filter((to) => to !== null)
+            .map((to) => [from, to]),
+        )
+      : tree
+        ? values.flatMap((_, i) => (i ? [[Math.floor((i - 1) / 2), i]] : []))
+        : list
+          ? event.next.flatMap((to, from) => (to === null ? [] : [[from, to]]))
+          : event.edges;
   return (
     <div className="structure-scroll">
       <svg
         className="structure-view"
-        style={list ? { minWidth: width } : undefined}
+        style={list || kind === "tree" ? { minWidth: width } : undefined}
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label={
@@ -124,7 +156,11 @@ export default function StructureView({ event, kind }) {
           </g>
         ))}
       </svg>
-      {!n && <p className="small-note">The heap is empty.</p>}
+      {!n && (
+        <p className="small-note">
+          The {list ? "list" : kind === "tree" ? "tree" : "heap"} is empty.
+        </p>
+      )}
     </div>
   );
 }

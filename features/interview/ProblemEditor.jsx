@@ -3,10 +3,10 @@ import { useState } from "react";
 import { parseProblem } from "../../lib/algorithms/interview.js";
 
 export default function ProblemEditor({ id, lesson, problem, onApply }) {
-  const [text, setText] = useState(problem.values.join(", ")),
+  const [text, setText] = useState(JSON.stringify(problem.values)),
     [parameter, setParameter] = useState(String(problem.parameter ?? "")),
     [edges, setEdges] = useState(
-      (problem.edges || []).map((e) => e.join(">")).join(", "),
+      JSON.stringify((problem.edges || []).map(([from, to]) => [to, from])),
     ),
     [error, setError] = useState("");
   function submit(event) {
@@ -33,11 +33,16 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
             edges: lesson.edges,
           }
         : lesson.presets[Number(index)];
-    setText(preset.values.join(", "));
+    setText(JSON.stringify(preset.values));
     setParameter(String(preset.parameter ?? ""));
     setEdges(preset.edges ?? "");
     onApply(
-      parseProblem(id, preset.values.join(","), preset.parameter, preset.edges),
+      parseProblem(
+        id,
+        JSON.stringify(preset.values),
+        preset.parameter,
+        preset.edges,
+      ),
     );
     setError("");
   }
@@ -45,9 +50,9 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
     <form className="problem-editor" onSubmit={submit} noValidate>
       <div className="editor-fields">
         <label className="values-field">
-          {id === "topo" ? "Prerequisites · from>to" : "Input values"}
+          {lesson.problem.input}
           <input
-            aria-label={id === "topo" ? "Prerequisites" : "Input values"}
+            aria-label={lesson.problem.input}
             value={id === "topo" ? edges : text}
             onChange={(e) =>
               id === "topo" ? setEdges(e.target.value) : setText(e.target.value)
@@ -84,7 +89,7 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
             <option value="" disabled>
               Choose a scenario…
             </option>
-            <option value="default">Default example</option>
+            <option value="default">LeetCode example</option>
             {lesson.presets.map((preset, i) => (
               <option key={preset.name} value={i}>
                 {preset.name}
@@ -94,6 +99,15 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
         </label>
         <span>Edits apply when you choose Apply & restart.</span>
       </div>
+      <p className="small-note editor-hint">
+        {id === "merge"
+          ? "Use 1–16 integers from 0 to 100. Small values keep a visible minimum bar height."
+          : id === "tree"
+            ? "Level-order array: use null for a missing child, for example [1,null,2,3]."
+            : id === "topo"
+              ? "Each pair is [course, prerequisite]. The arrow goes from the prerequisite to its course."
+              : "Use array notation, for example [1,2,3]. Apply your edits to start a new trace."}
+      </p>
       {error && (
         <p className="input-error" id="problem-error" role="alert">
           {error}

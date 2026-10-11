@@ -6,24 +6,8 @@
   padding: 0 6px;
   scrollbar-width: thin;
 }
-.lesson-group {
-  border-bottom: 1px solid var(--border);
-  padding: 9px 0;
-}
-.lesson-group summary {
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 650;
-  color: var(--ink);
-  padding: 7px 9px;
-}
-.lesson-group summary span {
-  float: right;
-  font-size: 10px;
-  color: var(--secondary);
-}
-.lesson-group .subnav {
-  margin: 8px 0 4px 18px;
+.lesson-nav .subnav {
+  margin: 4px 8px 8px 20px;
 }
 .sidebar-caption {
   margin-top: 28px;
@@ -34,11 +18,123 @@
   flex-shrink: 0;
 }
 .problem-editor {
-  background: var(--surface);
+  background: var(--surface-soft);
   border: 1px solid var(--border);
-  padding: 20px;
+  padding: 16px;
   border-radius: 12px;
-  margin-bottom: 24px;
+  margin: 18px 0 6px;
+}
+.problem-context {
+  padding-bottom: 4px;
+}
+.problem-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.problem-heading a {
+  color: var(--accent);
+  font-size: 11px;
+  text-decoration: none;
+}
+.problem-heading a:hover {
+  text-decoration: underline;
+}
+.problem-context h3 {
+  font-size: 17px;
+  margin: 14px 0 8px;
+}
+.problem-context p {
+  font-size: 12px;
+  color: var(--secondary);
+  line-height: 1.8;
+  margin: 8px 0;
+}
+.worked-example {
+  margin-top: 14px;
+  font-size: 12px;
+}
+.worked-example summary {
+  cursor: pointer;
+  color: var(--accent);
+}
+.example-io {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.example-io dt {
+  color: var(--secondary);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+.example-io dd {
+  margin: 0;
+}
+.example-io code,
+.judge-output code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.editor-hint {
+  margin-bottom: 0;
+}
+.judge-output {
+  padding: 18px 0 4px;
+  display: grid;
+  gap: 10px;
+}
+.judge-output code {
+  color: var(--green);
+}
+.sorting-bars {
+  height: 280px;
+  align-items: end;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 22px 4px 14px;
+}
+.sort-column {
+  flex: 1;
+  min-width: 30px;
+  text-align: center;
+}
+.sort-column.outside-range .sort-bar {
+  background: var(--surface-raised);
+  border-color: var(--border);
+}
+.bar-value {
+  display: block;
+  font: 12px monospace;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.sort-bar {
+  max-width: 72px;
+  margin: auto;
+  border: 1px solid var(--accent);
+  border-radius: 6px 6px 2px 2px;
+  background: color-mix(in srgb, var(--accent) 45%, var(--surface));
+  transition:
+    height 0.25s,
+    background 0.2s;
+}
+.sort-bar.examining {
+  background: var(--accent);
+  box-shadow: 0 0 18px #a98bfa30;
+}
+.sort-bar.resolved {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 40%, var(--surface));
+}
+@media (prefers-reduced-motion: reduce) {
+  .sort-bar {
+    transition: none;
+  }
 }
 .editor-fields {
   display: flex;
@@ -305,25 +401,28 @@
     margin: 0;
     min-height: unset;
   }
-  .lesson-nav > .nav-section,
-  .lesson-group {
+  .lesson-nav > .nav-section {
     flex-shrink: 0;
-    min-width: 145px;
+    width: 210px;
+  }
+  .sidebar .lesson-nav .nav-section > .module {
+    display: flex;
+    padding: 10px;
+  }
+  .sidebar .lesson-nav .module small {
+    display: block;
   }
   .lesson-nav .subnav {
     display: flex;
     flex-direction: column;
     align-items: start;
-    margin: 4px 0;
+    margin: 4px 8px 8px 20px;
   }
   .lesson-nav .subnav.graph-nav {
     flex-direction: column;
   }
-  .lesson-group summary {
-    font-size: 10px;
-  }
-  .lesson-group summary span {
-    margin-left: 8px;
+  .example-io {
+    grid-template-columns: 1fr;
   }
   .problem-editor {
     padding: 14px;

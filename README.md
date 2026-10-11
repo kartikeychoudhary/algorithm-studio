@@ -53,22 +53,22 @@ Both server commands bind to `127.0.0.1`. Vinext builds client and server bundle
 
 ### Arrays & searching
 
-| Lesson                                                                    | What you see                                                                  | Search / scan cost |
-| :------------------------------------------------------------------------ | :---------------------------------------------------------------------------- | :----------------- |
-| **[Binary search](lib/algorithms/array-patterns.js)** · `/lessons/binary` | Left, mid, and right pointers shrink the candidate interval.                  | O(log n)           |
-| **Two pointers** · `/lessons/pointers`                                    | Two sorted-array endpoints move toward a target pair.                         | O(n)               |
-| **Sliding window** · `/lessons/window`                                    | A fixed-size window adds one value, removes another, and tracks its best sum. | O(n)               |
-| **Hash-map Two Sum** · `/lessons/hashing`                                 | Complement lookups build a map of original indices.                           | O(n) expected      |
+| Lesson                                                                    | What you see                                                                         | Search / scan cost |
+| :------------------------------------------------------------------------ | :----------------------------------------------------------------------------------- | :----------------- |
+| **[Binary search](lib/algorithms/array-patterns.js)** · `/lessons/binary` | Left, mid, and right pointers shrink the candidate interval.                         | O(log n)           |
+| **Two pointers** · `/lessons/pointers`                                    | Two sorted-array endpoints move toward a target pair.                                | O(n)               |
+| **Sliding window** · `/lessons/window`                                    | A fixed-size window adds one value, removes another, and tracks its maximum average. | O(n)               |
+| **Hash-map Two Sum** · `/lessons/hashing`                                 | Complement lookups build a map of original indices.                                  | O(n) expected      |
 
-Binary search and two pointers sort editor input first; that preprocessing adds O(n log n). Their displayed costs describe the search itself.
+Binary search and two pointers validate sorted input without changing its indices. Binary search returns a zero-based index; Two Sum II returns one-based positions.
 
 ### Sorting, stacks & heaps
 
-| Lesson                                                         | What you see                                                         | Time            |
-| :------------------------------------------------------------- | :------------------------------------------------------------------- | :-------------- |
-| **[Merge sort](lib/algorithms/sorting.js)** · `/lessons/merge` | Recursive intervals, the merge buffer, and sorted runs.              | O(n log n)      |
-| **Monotonic stack** · `/lessons/stack`                         | Unresolved indices pop as their next strictly greater value arrives. | O(n)            |
-| **Min-heap Top K** · `/lessons/heap`                           | A bounded heap retains the largest k values as the input is scanned. | O(n log(k + 1)) |
+| Lesson                                                         | What you see                                                             | Time            |
+| :------------------------------------------------------------- | :----------------------------------------------------------------------- | :-------------- |
+| **[Merge sort](lib/algorithms/sorting.js)** · `/lessons/merge` | Height-based bars, recursive intervals, a merge buffer, and sorted runs. | O(n log n)      |
+| **Monotonic stack** · `/lessons/stack`                         | Daily Temperatures: unresolved days pop when a warmer day arrives.       | O(n)            |
+| **Min-heap · Kth largest** · `/lessons/heap`                   | A bounded heap retains k values; its root gives the kth largest.         | O(n log(k + 1)) |
 
 ### Linked lists & trees
 
@@ -104,6 +104,23 @@ BFS, DFS, Dijkstra, and A* share editable grids and weighted networks. Add walls
 | :---------------------------------------------------------------- | :------------------------------------------------------------------------- | :--------------- |
 | **[Tic-tac-toe](lib/algorithms/tic-tac-toe.js)** · `/lessons/ttt` | Complete minimax search, candidate scores, optimal play, and recursion.    | O(bᵈ) worst case |
 | **[Chess](lib/algorithms/chess.js)** · `/lessons/chess`           | Legal moves, depth 1–3 search, alpha–beta pruning, and best continuations. | O(bᵈ) worst case |
+
+## ⌨️ Practice with familiar inputs
+
+The twelve interview lessons include a linked LeetCode problem, a worked example, editable named inputs, and the algorithm’s return value. Input arrays use bracket notation; the animation and highlighted pseudocode use the same data.
+
+| Pattern                | Example input                                               | Return value                  |
+| :--------------------- | :---------------------------------------------------------- | :---------------------------- |
+| Binary search          | `nums = [-1,0,3,5,9,12], target = 9`                        | `4`                           |
+| Two Sum II             | `numbers = [2,7,11,15], target = 9`                         | `[1,2]`                       |
+| Maximum average window | `nums = [1,12,-5,-6,50,3], k = 4`                           | `12.75`                       |
+| Merge sort             | `nums = [5,2,3,1]`                                          | `[1,2,3,5]`                   |
+| Daily Temperatures     | `temperatures = [73,74,75,71,69,72,76,73]`                  | `[1,1,4,2,1,1,0,0]`           |
+| Kth largest            | `nums = [3,2,1,5,6,4], k = 2`                               | `5`                           |
+| Tree inorder           | `root = [1,null,2,3]`                                       | `[1,3,2]`                     |
+| Course Schedule II     | `numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]` | `[0,1,2,3]` (one valid order) |
+
+Sorting accepts **0–100**, with up to 16 values. Bar heights share a fixed scale during each run, and a minimum visible height keeps zero and small values readable. These teaching limits are narrower than the original problems. Course pairs are **[course, prerequisite]**; graph arrows point from the prerequisite to the course.
 
 ## 🎯 A path through the patterns
 
@@ -165,7 +182,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route, lesson guide, and category navigation are driven by the catalog. Put new graph-category entries in the graph navigation as well.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; every category uses the same expanded navigation style.
 
 </details>
 
@@ -179,7 +196,7 @@ npm run check            # All three checks
 npm run format           # Format source and documentation
 ```
 
-**49 tests:** 28 algorithm tests and 21 React component tests. Coverage includes exhaustive pair checks, reference sorting, heap invariants, every valid window size, independent tree traversal, coin change against BFS, power-set comparison, cycle detection, pathfinding references, bounded-flight enumeration, and adversarial tic-tac-toe play.
+Algorithm and React interaction tests cover exhaustive pair checks, reference sorting, heap invariants, every valid window size, independent tree traversal, coin change against BFS, power-set comparison, cycle detection, pathfinding references, bounded-flight enumeration, and adversarial tic-tac-toe play.
 
 GitHub Actions is configured to run `npm run check` on pushes and pull requests. Local test results are independent of GitHub runner availability.
 
@@ -188,7 +205,7 @@ GitHub Actions is configured to run `npm run check` on pushes and pull requests.
 - Complexity labels describe the algorithms. Storing snapshots for rewind adds memory and runtime overhead.
 - Input limits keep visualizations readable; this is a learning workspace, not a large-dataset benchmark.
 - The chess engine evaluates material at a limited depth. It is designed for teaching minimax.
-- The tree editor uses complete level-order trees; inorder is sorted only when the values form a BST.
+- The tree editor accepts compact level-order arrays with `null` for missing children, such as `[1,null,2,3]`. Inorder is sorted only when the values form a BST.
 - The app runs locally. This repository does not configure public deployment.
 - See [dependency notes](docs/dependencies.md) for the remaining upstream build-tool advisory.
 

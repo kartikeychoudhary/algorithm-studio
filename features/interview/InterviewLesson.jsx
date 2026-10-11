@@ -13,6 +13,8 @@ import ArrayView from "./ArrayView.jsx";
 import StructureView from "./StructureView.jsx";
 import StatePanels from "./StatePanels.jsx";
 import ProblemEditor from "./ProblemEditor.jsx";
+import BarChart from "./BarChart.jsx";
+import ProblemContext from "./ProblemContext.jsx";
 
 export default function InterviewLesson({ id }) {
   const lesson = interviewLessons[id];
@@ -20,7 +22,7 @@ export default function InterviewLesson({ id }) {
     () =>
       parseProblem(
         id,
-        lesson.values.join(","),
+        JSON.stringify(lesson.values),
         lesson.parameter?.value,
         lesson.edges,
       ),
@@ -35,12 +37,6 @@ export default function InterviewLesson({ id }) {
       <LearningStrip tag={`${lesson.space} space`}>
         {lesson.invariant}
       </LearningStrip>
-      <ProblemEditor
-        id={id}
-        lesson={lesson}
-        problem={problem}
-        onApply={setProblem}
-      />
       <div className="graph-layout interview-layout">
         <Panel
           eyebrow="MAKE THE PATTERN VISIBLE"
@@ -51,7 +47,16 @@ export default function InterviewLesson({ id }) {
             </span>
           }
         >
-          {["linked", "tree", "topo"].includes(id) ? (
+          <ProblemContext lesson={lesson} />
+          <ProblemEditor
+            id={id}
+            lesson={lesson}
+            problem={problem}
+            onApply={setProblem}
+          />
+          {id === "merge" ? (
+            <BarChart event={event} maximum={Math.max(...problem.values)} />
+          ) : ["linked", "tree", "topo"].includes(id) ? (
             <StructureView event={event} kind={id} />
           ) : (
             <ArrayView event={event} />
@@ -70,6 +75,14 @@ export default function InterviewLesson({ id }) {
           </div>
           <StatePanels event={event} />
           <EventExplanation event={event} />
+          <div className="judge-output">
+            <span className="overline">OUTPUT</span>
+            <code>
+              {event.done
+                ? JSON.stringify(event.result)
+                : "Run the algorithm to see its return value."}
+            </code>
+          </div>
           <p className="small-note">{lesson.note}</p>
         </Panel>
         <section className="trace-side">
