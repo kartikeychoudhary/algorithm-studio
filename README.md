@@ -1,77 +1,203 @@
-# Algorithm Studio
+<div align="center">
 
-A local learning app built with **Vinext, React, and Vite**. Learn algorithms by changing a problem and watching its board, graph, variables, and pseudocode update together.
+![Algorithm Studio — Understand the why. Watch the how.](docs/assets/cover.svg)
 
-## Run locally
+**An interactive workspace for learning algorithms and practicing interview patterns.**
 
-Use Node.js 22.12+ (Node 24 recommended).
+20 lessons · Editable examples · Live pseudocode · Rewindable execution · Dark & light themes
 
-```sh
+[Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
+
+</div>
+
+---
+
+## ✦ Learn the decision, not just the answer
+
+What happens when a binary-search target is missing? Why does a greedy coin choice fail? When does a cheap flight use too many stops?
+
+Algorithm Studio makes those questions visible. Edit the problem, step through the actual algorithm, and connect every highlighted line to the state it changes.
+
+| Make it yours                                                          | Watch it happen                                                   | Explain it back                                                                           |
+| :--------------------------------------------------------------------- | :---------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| Change arrays, targets, capacities, terrain, edges, or flight budgets. | Follow pointers, queues, stacks, recursion, heaps, and DP tables. | Use the invariant, pattern cues, and common pitfalls to explain _why_ an algorithm works. |
+
+Every lesson includes an interactive playground, an explanation, and pseudocode. Playback supports **step, back, play/pause, restart, finish, and speed control**. Execution snapshots come from the solvers themselves.
+
+## 🚀 Start in two commands
+
+**Prerequisite:** Node.js 22.12+; Node 24 recommended.
+
+```bash
 npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. For a local production server, stop development first, then run:
+Open **[localhost:5173](http://127.0.0.1:5173)**. No API keys, account setup, or database required.
 
-```sh
+<details>
+<summary><strong>Run the production build locally</strong></summary>
+
+Stop the development server first, then:
+
+```bash
 npm run build
 npm start
 ```
 
-Vinext provides App Router routes, React server rendering, and client components through Vite. `dist/` contains the production client and server builds; it is not a standalone static site. No deployment, database, account, or API key is required. The theme preference is stored locally; lesson edits persist across navigation and reset on reload.
+Both server commands bind to `127.0.0.1`. Vinext builds client and server bundles into `dist/`; the output requires the production server and is not a standalone static site.
 
-## Lessons
+</details>
 
-| Route               | Interactive example                                                                                       |
-| ------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/lessons/ttt`      | Full minimax, candidate scores, optimal moves, undo, and recursive execution                              |
-| `/lessons/chess`    | Legal chess moves, depth 1–3 minimax with alpha–beta pruning, material evaluation, and best continuations |
-| `/lessons/knapsack` | Editable 0/1 knapsack, dynamic programming table, take/skip decisions, and recovered items                |
-| `/lessons/bfs`      | Queue traversal and fewest-edge routes                                                                    |
-| `/lessons/dfs`      | Stack traversal and reachability                                                                          |
-| `/lessons/dijkstra` | Minimum-cost paths with non-negative weights                                                              |
-| `/lessons/astar`    | A* with consistent Manhattan or scaled geometric heuristics                                               |
-| `/lessons/flights`  | Cheapest flights within K stops, using layered Bellman–Ford; inspired by LeetCode 787                     |
+## 🧭 The playground
 
-Graph lessons share editable grids and networks, so you can compare algorithms on the same input. Execution controls include step, rewind, play/pause, finish, and playback speed. Dark theme is the default. Legacy links such as `/#flights` redirect to their lesson route.
+### Arrays & searching
 
-## Project structure
+| Lesson                                                                    | What you see                                                                  | Search / scan cost |
+| :------------------------------------------------------------------------ | :---------------------------------------------------------------------------- | :----------------- |
+| **[Binary search](lib/algorithms/array-patterns.js)** · `/lessons/binary` | Left, mid, and right pointers shrink the candidate interval.                  | O(log n)           |
+| **Two pointers** · `/lessons/pointers`                                    | Two sorted-array endpoints move toward a target pair.                         | O(n)               |
+| **Sliding window** · `/lessons/window`                                    | A fixed-size window adds one value, removes another, and tracks its best sum. | O(n)               |
+| **Hash-map Two Sum** · `/lessons/hashing`                                 | Complement lookups build a map of original indices.                           | O(n) expected      |
+
+Binary search and two pointers sort editor input first; that preprocessing adds O(n log n). Their displayed costs describe the search itself.
+
+### Sorting, stacks & heaps
+
+| Lesson                                                         | What you see                                                         | Time            |
+| :------------------------------------------------------------- | :------------------------------------------------------------------- | :-------------- |
+| **[Merge sort](lib/algorithms/sorting.js)** · `/lessons/merge` | Recursive intervals, the merge buffer, and sorted runs.              | O(n log n)      |
+| **Monotonic stack** · `/lessons/stack`                         | Unresolved indices pop as their next strictly greater value arrives. | O(n)            |
+| **Min-heap Top K** · `/lessons/heap`                           | A bounded heap retains the largest k values as the input is scanned. | O(n log(k + 1)) |
+
+### Linked lists & trees
+
+| Lesson                                                                      | What you see                                                            | Time |
+| :-------------------------------------------------------------------------- | :---------------------------------------------------------------------- | :--- |
+| **[Reverse linked list](lib/algorithms/structures.js)** · `/lessons/linked` | `prev`, `current`, and `following` move while each next arrow reverses. | O(n) |
+| **Binary-tree inorder** · `/lessons/tree`                                   | An explicit ancestor stack produces left → node → right order.          | O(n) |
+
+### Dynamic programming & backtracking
+
+| Lesson                                                                   | What you see                                                          | Time                      |
+| :----------------------------------------------------------------------- | :-------------------------------------------------------------------- | :------------------------ |
+| **[Coin change](lib/algorithms/dynamic-patterns.js)** · `/lessons/coins` | Minimum coins for every smaller amount, then recovered denominations. | O(amount × denominations) |
+| **Subsets** · `/lessons/subsets`                                         | Choose, recurse, and undo while the power set grows.                  | O(n × 2ⁿ)                 |
+| **[0/1 knapsack](lib/algorithms/knapsack.js)** · `/lessons/knapsack`     | Take/skip decisions fill a table and recover the optimal pack.        | O(n × capacity)           |
+
+### Graphs & shortest paths
+
+| Lesson                                                                 | What you see                                                   | Time              |
+| :--------------------------------------------------------------------- | :------------------------------------------------------------- | :---------------- |
+| **[BFS](lib/algorithms/graphs.js)** · `/lessons/bfs`                   | A queue explores layers and finds a fewest-edge route.         | O(V + E)          |
+| **DFS** · `/lessons/dfs`                                               | A stack follows branches to demonstrate reachability.          | O(V + E)          |
+| **Dijkstra** · `/lessons/dijkstra`                                     | The cheapest known route expands first.                        | O((V + E) log V)  |
+| **A\*** · `/lessons/astar`                                             | Cost so far and a consistent heuristic guide the search.       | O((V + E) log V)  |
+| **Cheapest flights** · `/lessons/flights`                              | Previous/next cost layers enforce a maximum of K stops.        | O((K + 1)(V + E)) |
+| **[Topological sort](lib/algorithms/structures.js)** · `/lessons/topo` | Prerequisite counts unlock courses; a cycle blocks completion. | O(V + E)          |
+
+BFS, DFS, Dijkstra, and A* share editable grids and weighted networks. Add walls, paint terrain, move endpoints, change costs, and disable edges to compare their behavior on the same problem.
+
+### Game trees & minimax
+
+| Lesson                                                            | What you see                                                               | Time             |
+| :---------------------------------------------------------------- | :------------------------------------------------------------------------- | :--------------- |
+| **[Tic-tac-toe](lib/algorithms/tic-tac-toe.js)** · `/lessons/ttt` | Complete minimax search, candidate scores, optimal play, and recursion.    | O(bᵈ) worst case |
+| **[Chess](lib/algorithms/chess.js)** · `/lessons/chess`           | Legal moves, depth 1–3 search, alpha–beta pruning, and best continuations. | O(bᵈ) worst case |
+
+## 🎯 A path through the patterns
+
+1. **Read a sequence:** binary search → two pointers → sliding window → hash lookup.
+2. **Keep useful state:** monotonic stack → merge sort → bounded heap.
+3. **Follow structure:** linked-list reversal → tree traversal → BFS → DFS.
+4. **Optimize a route:** Dijkstra → A* → topological ordering → stop-constrained flights.
+5. **Reuse or explore choices:** coin change → knapsack → subsets → minimax.
+
+For each lesson, try this loop:
+
+> **Predict the next step → advance once → explain the invariant → change an input.**
+
+Built-in scenarios include missing targets, duplicate pairs, all-negative windows, descending arrays, impossible amounts, and cyclic dependencies. These lessons build a foundation for interviews; practice implementing the patterns independently and adapting them to unfamiliar problems.
+
+## 🧱 Built to grow
+
+**Vinext App Router · React · Vite · chess.js · Node test runner · Vitest**
 
 ```text
-app/                     Vinext App Router pages, root layout, and 404 page
+app/                        Routes, root layout, and 404 page
 components/
-  layout/                Application shell, navigation, guides, and state provider
-  execution/             Shared pseudocode, variables, explanations, and controls
-  ui/                    Reusable panels and validated numeric input
+  layout/                   Navigation, guides, and shared lesson state
+  execution/                Pseudocode, variables, explanations, playback controls
+  ui/                       Shared panels and validated numeric fields
 features/
-  minimax/               Tic-tac-toe and chess lesson components and boards
-  knapsack/              Inventory editor and dynamic programming table
-  graphs/                Graph lesson, grid, SVG network, editor, and inspector
-hooks/                   Playback lifecycle and timer management
+  interview/                Editors, arrays, structures, and trace-state panels
+  minimax/                  Tic-tac-toe and chess boards
+  knapsack/                 Inventory and dynamic programming table
+  graphs/                   Grid, network, edge editor, and graph inspector
+hooks/                      Playback timing and cleanup
 lib/
-  algorithms/            Pure solvers and immutable execution trace generators
-  data/                  Lesson metadata, explanations, networks, and grid presets
-styles/                  Shared responsive layout and themes
-tests/                   Algorithm correctness and React interaction tests
-.github/workflows/       Automated tests and production build
+  algorithms/               Pure solvers and immutable trace generators
+  data/                     Lesson catalog, examples, and graph presets
+styles/                     Responsive layout and theme tokens
+tests/                      Reference comparisons and React interaction tests
+docs/                       README artwork and dependency notes
+.github/workflows/          Automated validation
 ```
 
-Route files select the lesson; feature components own its presentation. A shared provider retains lesson inputs between routes, while `usePlayback` owns each trace's temporary playback state and cleans up timers. Solvers have no React or browser dependencies. Visualizations render immutable snapshots instead of mutating the DOM.
+```mermaid
+flowchart LR
+    A[Edit a problem] --> B[Pure algorithm]
+    B --> C[Immutable execution snapshots]
+    C --> D[Playback hook]
+    D --> E[Visual state]
+    D --> F[Highlighted pseudocode]
+    D --> G[Live variables]
+```
 
-To add a lesson, implement its solver in `lib/algorithms`, its UI in `features`, register metadata in `lib/data/lessons.js`, and connect it to `Studio` and `Sidebar`. Reuse the execution components when the algorithm exposes step events.
+Lesson inputs persist across navigation in the shared React provider; reloading restores the examples. Only the theme preference is saved in local storage. Legacy links such as `/#flights` redirect to their lesson routes.
 
-## Validation
+<details>
+<summary><strong>Add another interview lesson</strong></summary>
 
-```sh
-npm test                 # Pure algorithm and trace correctness
-npm run test:components  # React interactions and playback cleanup
-npm run build            # Client, SSR, and React Server Component builds
-npm run check            # All of the above
+1. Implement a pure solver in `lib/algorithms/`, returning `{ code, events, result }`.
+2. Record a snapshot at each meaningful step with `recorder()`. Include a code-line index, explanation, visual state, and live variables.
+3. Add metadata, examples, an invariant, and an interview pitfall to `lib/data/interview-lessons.js`.
+4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
+5. Add an independent correctness check and an interaction test.
+
+The route, lesson guide, and category navigation are driven by the catalog. Put new graph-category entries in the graph navigation as well.
+
+</details>
+
+## 🧪 Verify the behavior
+
+```bash
+npm test                 # Algorithm correctness and snapshot checks
+npm run test:components  # Editing, execution controls, and timer cleanup
+npm run build            # Production client, SSR, and RSC builds
+npm run check            # All three checks
 npm run format           # Format source and documentation
 ```
 
-Tests cover adversarial tic-tac-toe play, chess terminal positions, knapsack against exhaustive selection, weighted graph searches against a reference solver, bounded flights against exhaustive routes, trace/solver equivalence, and interactive edits. GitHub Actions runs the same check command.
+**49 tests:** 28 algorithm tests and 21 React component tests. Coverage includes exhaustive pair checks, reference sorting, heap invariants, every valid window size, independent tree traversal, coin change against BFS, power-set comparison, cycle detection, pathfinding references, bounded-flight enumeration, and adversarial tic-tac-toe play.
 
-Complexity labels describe the underlying algorithms. Storing snapshots for backward playback adds teaching overhead. The chess evaluation is intentionally material-only and is not a competitive chess engine. Google Fonts is optional; system fonts are used when unavailable.
+GitHub Actions is configured to run `npm run check` on pushes and pull requests. Local test results are independent of GitHub runner availability.
 
-See [dependency notes](docs/dependencies.md) for the remaining upstream build-tool advisory and the patched dependency override.
+## A few deliberate boundaries
+
+- Complexity labels describe the algorithms. Storing snapshots for rewind adds memory and runtime overhead.
+- Input limits keep visualizations readable; this is a learning workspace, not a large-dataset benchmark.
+- The chess engine evaluates material at a limited depth. It is designed for teaching minimax.
+- The tree editor uses complete level-order trees; inorder is sorted only when the values form a BST.
+- The app runs locally. This repository does not configure public deployment.
+- See [dependency notes](docs/dependencies.md) for the remaining upstream build-tool advisory.
+
+---
+
+<div align="center">
+
+**Less memorizing. More understanding.**
+
+Built for the _“oh, now I get it”_ moment.
+
+</div>

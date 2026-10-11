@@ -1,5 +1,6 @@
 import { graphGuides } from "../../lib/data/guides.js";
 import { lessons } from "../../lib/data/lessons.js";
+import { interviewLessons } from "../../lib/data/interview-lessons.js";
 const guides = {
   ttt: [
     [
@@ -45,12 +46,20 @@ const guides = {
   ],
 };
 export default function LessonGuide({ lessonId, onOpen }) {
+  const interview = interviewLessons[lessonId];
+  const steps = interview
+    ? [
+        ["Maintain the invariant", interview.invariant],
+        ["Recognize the pattern", interview.recognize],
+        ["Avoid the trap", interview.pitfall],
+      ]
+    : graphGuides[lessonId] || guides[lessonId];
   return (
     <section className="panel article">
       <span className="overline">THE CORE IDEA</span>
       <h2>{lessons[lessonId].label}</h2>
       <div className="explain-steps">
-        {(graphGuides[lessonId] || guides[lessonId]).map(([title, body], i) => (
+        {steps.map(([title, body], i) => (
           <div key={title}>
             <span>0{i + 1}</span>
             <div>
@@ -60,6 +69,11 @@ export default function LessonGuide({ lessonId, onOpen }) {
           </div>
         ))}
       </div>
+      {interview && (
+        <p>
+          {interview.note} Auxiliary space: {interview.space}.
+        </p>
+      )}
       <p>
         V = nodes, E = edges, K = maximum stops, b = branching factor, d =
         search depth, n = items, W = capacity. Complexity labels describe the

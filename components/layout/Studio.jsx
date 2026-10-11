@@ -9,6 +9,8 @@ import TicTacToeLesson from "../../features/minimax/TicTacToeLesson.jsx";
 import ChessLesson from "../../features/minimax/ChessLesson.jsx";
 import KnapsackLesson from "../../features/knapsack/KnapsackLesson.jsx";
 import GraphLesson from "../../features/graphs/GraphLesson.jsx";
+import InterviewLesson from "../../features/interview/InterviewLesson.jsx";
+import { interviewLessons } from "../../lib/data/interview-lessons.js";
 
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
@@ -94,6 +96,8 @@ export default function Studio({ lessonId }) {
           >
             {tab === "learn" ? (
               <LessonGuide lessonId={lessonId} onOpen={() => setTab("lab")} />
+            ) : interviewLessons[lessonId] ? (
+              <InterviewLesson id={lessonId} key={lessonId} />
             ) : graphLessons[lessonId] ? (
               <GraphLesson algorithm={lessonId} />
             ) : lessonId === "ttt" ? (

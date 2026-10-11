@@ -1,5 +1,6 @@
 import "../styles/base.css";
 import "../styles/studio.css";
+import "../styles/interview.css";
 import { StudioProvider } from "../components/layout/StudioProvider.jsx";
 
 export const metadata = {

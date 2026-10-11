@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Algorithm Studio — Understand the why. Watch the how.</title>
+  <desc id="desc">A dark violet illustration with array pointers, a branching tree, and a highlighted route. Twenty interactive algorithm lessons built with Vinext and React.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#131420"/><stop offset="1" stop-color="#222037"/></linearGradient>
+    <linearGradient id="accent"><stop stop-color="#c6aeff"/><stop offset="1" stop-color="#83dfc1"/></linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#fff" stroke-opacity=".025"/></pattern>
+  </defs>
+  <rect width="1280" height="420" rx="24" fill="url(#bg)"/><rect width="1280" height="420" rx="24" fill="url(#grid)"/>
+  <circle cx="1160" cy="30" r="210" fill="#9570eb" opacity=".05"/>
+  <rect x="52" y="51" width="39" height="39" rx="12" fill="#b398f5"/><text x="64" y="78" fill="#171326" font-family="Arial,sans-serif" font-size="24" font-weight="700">A</text>
+  <text x="108" y="77" fill="#b8b3cc" font-family="Arial,sans-serif" font-size="15" letter-spacing="3">ALGORITHM STUDIO</text>
+  <text x="52" y="160" fill="#f3efff" font-family="Arial,sans-serif" font-size="51" font-weight="700" letter-spacing="-2">Understand the why.</text>
+  <text x="52" y="221" fill="url(#accent)" font-family="Arial,sans-serif" font-size="51" font-weight="700" letter-spacing="-2">Watch the how.</text>
+  <text x="55" y="267" fill="#aaa6be" font-family="Arial,sans-serif" font-size="17">Change an input. Follow a decision. Let the idea click.</text>
+  <g font-family="Arial,sans-serif" font-size="12" letter-spacing="1.5">
+    <rect x="54" y="321" width="135" height="32" rx="16" fill="#302941"/><text x="72" y="341" fill="#cbb8ff">20 LESSONS</text>
+    <rect x="201" y="321" width="179" height="32" rx="16" fill="#21332f"/><text x="219" y="341" fill="#8bdfc3">LIVE PSEUDOCODE</text>
+    <text x="401" y="342" fill="#9994ae">VINEXT + REACT</text>
+  </g>
+  <g transform="translate(750 44)">
+    <rect width="473" height="330" rx="18" fill="#161824" stroke="#3a354e"/>
+    <circle cx="22" cy="21" r="4" fill="#ba9df6"/><circle cx="37" cy="21" r="4" fill="#6cd1b0"/><circle cx="52" cy="21" r="4" fill="#e3b36e"/>
+    <text x="306" y="26" fill="#948da9" font-family="monospace" font-size="11">STEP. SEE. UNDERSTAND.</text>
+    <g font-family="monospace" text-anchor="middle" font-size="19" fill="#cbc6dc">
+      <rect x="28" y="64" width="56" height="54" rx="8" fill="#242436" stroke="#343246"/><text x="56" y="98">2</text>
+      <rect x="100" y="64" width="56" height="54" rx="8" fill="#242436" stroke="#343246"/><text x="128" y="98">5</text>
+      <rect x="172" y="64" width="56" height="54" rx="8" fill="#342844" stroke="#bc9aff" stroke-width="2"/><text x="200" y="98" fill="#d0b6ff">8</text>
+      <rect x="244" y="64" width="56" height="54" rx="8" fill="#242436" stroke="#343246"/><text x="272" y="98">12</text>
+      <rect x="316" y="64" width="56" height="54" rx="8" fill="#242436" stroke="#343246"/><text x="344" y="98">16</text>
+      <rect x="388" y="64" width="56" height="54" rx="8" fill="#242436" stroke="#343246"/><text x="416" y="98">23</text>
+      <text x="56" y="144" font-size="11" fill="#9e86c8">LEFT</text><text x="200" y="144" font-size="11" fill="#c4a7ff">MID</text><text x="416" y="144" font-size="11" fill="#9e86c8">RIGHT</text>
+    </g>
+    <path d="M106 203L61 251M106 203L151 251M151 251L186 290" fill="none" stroke="#514765" stroke-width="2"/>
+    <path d="M106 203L151 251L186 290" fill="none" stroke="#78d5b5" stroke-width="2"/>
+    <g fill="#202e2b" stroke="#78d5b5"><circle cx="106" cy="203" r="15"/><circle cx="151" cy="251" r="15"/><circle cx="186" cy="290" r="12"/></g><circle cx="61" cy="251" r="15" fill="#242436" stroke="#514765"/>
+    <g font-family="monospace" font-size="12"><text x="238" y="205" fill="#80778f">while left &lt;= right:</text><rect x="226" y="219" width="226" height="30" rx="5" fill="#332942"/><text x="238" y="239" fill="#d0b6ff">  mid = (left + right) // 2</text><text x="238" y="273" fill="#80778f">  compare. narrow. repeat.</text><text x="238" y="300" fill="#80d3b8">  one decision at a time →</text></g>
+  </g>
+</svg>
