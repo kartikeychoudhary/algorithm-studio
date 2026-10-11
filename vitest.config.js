@@ -9,6 +9,9 @@ export default defineConfig({
       "next/link": fileURLToPath(
         new URL("./tests/components/LinkStub.jsx", import.meta.url),
       ),
+      "next/navigation": fileURLToPath(
+        new URL("./tests/components/NavigationStub.js", import.meta.url),
+      ),
     },
   },
   test: { environment: "jsdom", include: ["tests/components/**/*.test.jsx"] },

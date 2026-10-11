@@ -171,7 +171,7 @@ flowchart LR
     D --> G[Live variables]
 ```
 
-Lesson inputs persist across navigation in the shared React provider; reloading restores the examples. Only the theme preference is saved in local storage. Legacy links such as `/#flights` redirect to their lesson routes.
+Lesson inputs persist across navigation in the shared React provider; reloading restores the examples. The sidebar lives in the root layout, so changing lessons preserves its scroll position and search. Its browsing position is also saved for the current browser session; the theme preference is saved in local storage. Legacy links such as `/#flights` redirect to their lesson routes.
 
 <details>
 <summary><strong>Add another interview lesson</strong></summary>

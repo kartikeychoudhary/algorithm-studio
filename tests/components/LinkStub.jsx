@@ -1,3 +1,3 @@
-export default function LinkStub({ children, ...props }) {
+export default function LinkStub({ children, scroll, ...props }) {
   return <a {...props}>{children}</a>;
 }
