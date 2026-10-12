@@ -15,6 +15,7 @@ import StatePanels from "./StatePanels.jsx";
 import ProblemEditor from "./ProblemEditor.jsx";
 import BarChart from "./BarChart.jsx";
 import ProblemContext from "./ProblemContext.jsx";
+import WaterChart from "./WaterChart.jsx";
 
 export default function InterviewLesson({ id }) {
   const lesson = interviewLessons[id];
@@ -54,9 +55,11 @@ export default function InterviewLesson({ id }) {
             problem={problem}
             onApply={setProblem}
           />
-          {["merge", "quick"].includes(id) ? (
+          {id === "rain" ? (
+            <WaterChart event={event} />
+          ) : ["merge", "quick"].includes(id) ? (
             <BarChart event={event} maximum={Math.max(...problem.values)} />
-          ) : ["linked", "tree", "topo"].includes(id) ? (
+          ) : ["linked", "tree", "topo", "union"].includes(id) ? (
             <StructureView event={event} kind={id} />
           ) : (
             <ArrayView event={event} />

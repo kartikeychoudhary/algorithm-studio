@@ -4,7 +4,7 @@
 
 **A visual workspace for algorithms, engineering concepts, and software design patterns.**
 
-55 lessons · 26 algorithms · 6 concept labs · 23 design patterns · Dark & light themes
+70 lessons · 32 algorithms · 13 concept labs · 23 design patterns · 2 case studies
 
 [Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -59,7 +59,18 @@ See the [deployment setup guide](docs/cloudflare-deployment.md) for token permis
 
 ## 🧭 The playground
 
-The sidebar has three searchable, collapsible libraries: **Algorithms**, **Important Concepts**, and **System Design**. Expansion and scroll position survive navigation; search temporarily reveals matching groups.
+Switch between four focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, and **Case Studies**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+
+### System-design case studies
+
+Build a complete interview answer by connecting requirements to concrete decisions. Each case includes API contracts, a data model, adjustable workload estimates, animated request flows, failure handling, security considerations, and links to the concepts it uses.
+
+| Case study                                                              | Explore                                                                                                                                                |
+| :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **[URL shortener](https://algo.kartikey.cv/lessons/shortener)**         | Cache hits, misses, and outages; unique codes, replicas, hot keys, sharding, rate limits, and asynchronous analytics.                                  |
+| **[Order & payment system](https://algo.kartikey.cv/lessons/checkout)** | Successful payment, duplicate requests, and declined payments; inventory transactions, idempotency, a transactional outbox, retries, and compensation. |
+
+Capacity figures are illustrative estimates. These are teaching simulations, with explicit assumptions and tradeoffs—not deployed databases or payment integrations.
 
 ### Important Concepts
 
@@ -74,6 +85,18 @@ The sidebar has three searchable, collapsible libraries: **Algorithms**, **Impor
 
 The database and network labs are in-memory teaching models. CAP consistency means linearizability; ACID consistency concerns application invariants. The examples make this distinction explicit.
 
+Seven additional walkthroughs connect these foundations to real systems:
+
+| Concept                                   | Follow the decision                                                    |
+| :---------------------------------------- | :--------------------------------------------------------------------- |
+| **Caching & LRU** · `/lessons/caching`    | Read through cache-aside; distinguish expiration from eviction.        |
+| **Database indexes** · `/lessons/indexes` | Seek a key through a B-tree and weigh faster reads against write cost. |
+| **Replication** · `/lessons/replication`  | Observe a stale replica, then watch it catch up.                       |
+| **Sharding** · `/lessons/sharding`        | Route a partition key and reason about hot keys and rebalancing.       |
+| **Message queues** · `/lessons/queues`    | Lose an acknowledgment and handle a duplicate delivery.                |
+| **Idempotency** · `/lessons/idempotency`  | Retry a request safely using a stored key and result.                  |
+| **Rate limiting** · `/lessons/ratelimit`  | Spend and refill tokens in a token bucket.                             |
+
 ### System Design · Design patterns
 
 These are the **23 classic object-oriented design patterns**, grouped by purpose. They complement broader system design; they are not deployment architectures.
@@ -87,6 +110,8 @@ These are the **23 classic object-oriented design patterns**, grouped by purpose
 Each lesson contains a concrete scenario, a diagram that highlights each call or response, pseudocode, playback, an everyday analogy, use cases, and tradeoffs. Try `/lessons/observer`, `/lessons/adapter`, or `/lessons/builder`.
 
 ### More interview essentials
+
+New visual lessons cover **Product of Array Except Self**, **Search in Rotated Sorted Array**, **Trapping Rain Water**, **Minimum Size Subarray Sum**, **Boyer–Moore Majority Vote**, and **Union–Find**. Trace prefix/suffix products, moving boundaries, water above height bars, candidate cancellation, and the disjoint-set parent forest.
 
 | Algorithm                          | Route             | What changes as you step                                                        |
 | :--------------------------------- | :---------------- | :------------------------------------------------------------------------------ |
@@ -155,7 +180,9 @@ BFS, DFS, Dijkstra, and A* share editable grids and weighted networks. Add walls
 
 ## ⌨️ Practice with familiar inputs
 
-The eighteen interview lessons include a linked LeetCode problem, a worked example, editable named inputs, and the algorithm’s return value. Input arrays use bracket notation; the animation and highlighted pseudocode use the same data.
+The twenty-four interview lessons include a linked LeetCode problem, a worked example, editable named inputs, and the algorithm’s return value. Input arrays use bracket notation; the animation and highlighted pseudocode use the same data.
+
+**Practice on LeetCode** cards also connect graph algorithms, applicable concepts, patterns, and case studies to relevant questions. Each card explains the connection; coding drills such as LRU Cache or TinyURL are distinguished from broader distributed-system guarantees.
 
 | Pattern                | Example input                                               | Return value                  |
 | :--------------------- | :---------------------------------------------------------- | :---------------------------- |
@@ -197,7 +224,7 @@ components/
   ui/                       Shared panels and validated numeric fields
 features/
   concepts/                 ACID, CAP, growth explorer, and principle lessons
-  design/                   Design-pattern lesson presentation
+  design/                   Design patterns and end-to-end case studies
   interview/                Editors, arrays, structures, and trace-state panels
   minimax/                  Tic-tac-toe and chess boards
   knapsack/                 Inventory and dynamic programming table
@@ -234,7 +261,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under the three collapsible libraries.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under four focused libraries. Curated practice links live in `lib/data/practice.js` and case-study scenarios in `lib/data/case-studies.js`.
 
 </details>
 
@@ -258,7 +285,7 @@ GitHub Actions is configured to run `npm run check` on pushes and pull requests.
 - Input limits keep visualizations readable; this is a learning workspace, not a large-dataset benchmark.
 - The chess engine evaluates material at a limited depth. It is designed for teaching minimax.
 - The tree editor accepts compact level-order arrays with `null` for missing children, such as `[1,null,2,3]`. Inorder is sorted only when the values form a BST.
-- The app runs locally. This repository does not configure public deployment.
+- The app runs locally without external services; the optional GitHub workflow deploys it to Cloudflare Workers.
 - See [dependency notes](docs/dependencies.md) for the remaining upstream build-tool advisory.
 
 ---

@@ -76,9 +76,7 @@ export default function FlowDiagram({ scenario, event }) {
                     : "flow-node"
               }
             >
-              <title>
-                {node}: {event.states[i]}
-              </title>
+              <title>{`${node}: ${event.states[i]}`}</title>
               <rect x={x - 100} y={y - 42} width="200" height="84" rx="12" />
               <text x={x} y={y - 13} className="flow-role">
                 {node}

@@ -107,6 +107,9 @@
   overflow: auto;
   margin: 16px -6px;
 }
+.learning-layout > * {
+  min-width: 0;
+}
 .flow-diagram {
   width: 100%;
   min-width: 0;
@@ -380,5 +383,248 @@
   .growth-track i,
   .balance-meter i {
     transition: none;
+  }
+}
+.practice-section {
+  margin: 42px 0 24px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+.practice-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.practice-heading h2 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+.practice-heading > span {
+  font-size: 11px;
+  color: var(--secondary);
+}
+.practice-grid,
+.case-overview,
+.case-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.practice-card {
+  display: block;
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.15s;
+}
+.practice-card:hover {
+  border-color: var(--accent);
+}
+.practice-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--accent);
+  font-size: 11px;
+}
+.practice-card h3 {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 16px 0 9px;
+}
+.practice-card p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--secondary);
+  margin: 0;
+}
+.case-brief {
+  max-width: 900px;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--secondary);
+}
+.case-concept-map {
+  padding: 22px;
+  margin: 26px 0;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  border-radius: 12px;
+}
+.case-concept-map > div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.case-concept-map a {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 6px;
+}
+.case-overview h2,
+.case-block h2,
+.case-flow-heading h2 {
+  font-size: 22px;
+  line-height: 1.4;
+}
+.case-overview ul {
+  padding-left: 20px;
+}
+.case-overview li {
+  margin: 12px 0;
+}
+.case-slider {
+  display: grid;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--secondary);
+  margin: 22px 0;
+}
+.case-slider input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.capacity-results {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.capacity-results strong {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.case-block {
+  margin: 28px 0;
+}
+.case-schema {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 20px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 2;
+  color: var(--accent);
+}
+.case-flow-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-top: 32px;
+}
+.case-flow-heading label {
+  display: grid;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--secondary);
+}
+.case-flow-heading select {
+  width: 230px;
+  max-width: 100%;
+  padding: 12px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.case-decision-grid .idea-card {
+  margin: 0;
+}
+.case-decision-grid h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.case-decision-grid a {
+  color: var(--accent);
+  font-size: 14px;
+}
+.case-table-scroll {
+  overflow: auto;
+}
+.case-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: left;
+}
+.case-table td,
+.case-table th {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.case-table td {
+  color: var(--secondary);
+}
+.case-table th {
+  min-width: 120px;
+}
+.water-chart {
+  display: flex;
+  align-items: end;
+  gap: 5px;
+  padding: 24px 0;
+  min-height: 240px;
+}
+.water-column {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+.water-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 175px;
+}
+.water-fill {
+  background: #67bced;
+  border: 1px solid #87d4ff;
+}
+.water-ground {
+  background: var(--accent);
+  opacity: 0.55;
+}
+.water-column.active .water-ground {
+  opacity: 1;
+}
+.water-column strong,
+.water-column small {
+  display: block;
+  font-size: 10px;
+  margin-top: 7px;
+  color: var(--secondary);
+}
+@media (max-width: 850px) {
+  .case-overview {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .practice-grid,
+  .case-decision-grid {
+    grid-template-columns: 1fr;
+  }
+  .practice-heading,
+  .case-flow-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .case-table {
+    min-width: 560px;
+  }
+  .case-concept-map {
+    padding: 16px;
   }
 }

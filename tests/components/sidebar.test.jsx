@@ -64,7 +64,11 @@ it("filters by category, recovers from no results, and toggles the mobile librar
   render(<Sidebar lessonId="ttt" />);
   const input = screen.getByRole("textbox", { name: "Find a lesson" });
   fireEvent.change(input, { target: { value: "graphs" } });
-  expect(screen.getAllByRole("link").length).toBe(7); // brand + six graph lessons
+  expect(
+    screen
+      .getByRole("navigation", { name: "Learning library" })
+      .querySelectorAll("a").length,
+  ).toBe(7);
   fireEvent.change(input, { target: { value: "does not exist" } });
   expect(screen.getByRole("status").textContent).toContain("No lessons found");
   fireEvent.click(screen.getByRole("button", { name: "Show all lessons" }));
@@ -82,7 +86,7 @@ it("collapsed categories persist while search temporarily reveals matching lesso
   expect(
     screen
       .getByRole("button", { name: "System Design" })
-      .getAttribute("aria-expanded"),
+      .getAttribute("aria-pressed"),
   ).toBe("false");
   fireEvent.click(screen.getByRole("button", { name: "System Design" }));
   fireEvent.click(screen.getByRole("button", { name: "Structural patterns" }));

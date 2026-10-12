@@ -80,7 +80,9 @@ export default function StructureView({ event, kind }) {
             ? "Linked list next pointers"
             : tree
               ? `${kind === "heap" ? "Min-heap" : "Binary tree"} diagram`
-              : "Course prerequisite graph"
+              : kind === "union"
+                ? "Union–find parent forest"
+                : "Course prerequisite graph"
         }
       >
         <defs>

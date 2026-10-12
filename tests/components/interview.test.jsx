@@ -16,7 +16,9 @@ it.each(Object.keys(interviewLessons))(
   "%s renders a visual trace and supports finish / rewind",
   (id) => {
     const { container } = mount(id);
-    expect(container.querySelector("svg,.array-visual")).toBeTruthy();
+    expect(
+      container.querySelector("svg,.array-visual,.water-chart"),
+    ).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Finish" }));
     expect(screen.getByText("Complete", { exact: true })).toBeTruthy();
     expect(container.querySelector('[aria-current="step"]')).toBeTruthy();

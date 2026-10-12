@@ -66,6 +66,12 @@ export default function ConceptLesson({ id, tab }) {
           <Walkthrough key={selected} scenario={facet} />
         )}
       </section>
+      {lesson.tradeoff && (
+        <div className="idea-card">
+          <span className="overline">TRADEOFFS & FAILURE MODES</span>
+          <p>{lesson.tradeoff}</p>
+        </div>
+      )}
       {lesson.source && (
         <p className="learning-source">
           Read further:{" "}

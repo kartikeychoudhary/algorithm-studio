@@ -6,7 +6,11 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
   const [text, setText] = useState(JSON.stringify(problem.values)),
     [parameter, setParameter] = useState(String(problem.parameter ?? "")),
     [edges, setEdges] = useState(
-      JSON.stringify((problem.edges || []).map(([from, to]) => [to, from])),
+      JSON.stringify(
+        (problem.edges || []).map(([from, to]) =>
+          id === "topo" ? [to, from] : [from, to],
+        ),
+      ),
     ),
     [error, setError] = useState("");
   function submit(event) {
@@ -53,9 +57,11 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
           {lesson.problem.input}
           <input
             aria-label={lesson.problem.input}
-            value={id === "topo" ? edges : text}
+            value={["topo", "union"].includes(id) ? edges : text}
             onChange={(e) =>
-              id === "topo" ? setEdges(e.target.value) : setText(e.target.value)
+              ["topo", "union"].includes(id)
+                ? setEdges(e.target.value)
+                : setText(e.target.value)
             }
             aria-invalid={!!error}
             aria-describedby={error ? "problem-error" : undefined}
@@ -104,9 +110,11 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
           ? "Use 1–16 integers from 0 to 100. Small values keep a visible minimum bar height."
           : id === "tree"
             ? "Level-order array: use null for a missing child, for example [1,null,2,3]."
-            : id === "topo"
-              ? "Each pair is [course, prerequisite]. The arrow goes from the prerequisite to its course."
-              : "Use array notation, for example [1,2,3]. Apply your edits to start a new trace."}
+            : id === "union"
+              ? "Each connection is an undirected pair [a,b]. The visualization shows union–find parent pointers."
+              : id === "topo"
+                ? "Each pair is [course, prerequisite]. The arrow goes from the prerequisite to its course."
+                : "Use array notation, for example [1,2,3]. Apply your edits to start a new trace."}
       </p>
       {error && (
         <p className="input-error" id="problem-error" role="alert">

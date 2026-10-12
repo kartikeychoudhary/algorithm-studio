@@ -422,3 +422,133 @@
     font-size: 12px;
   }
 }
+/* Focused library navigation: search stays global; browsing shows one library. */
+.library-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  padding: 0 14px 18px;
+  flex-shrink: 0;
+}
+.library-switcher button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 12px 9px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--secondary);
+  text-align: left;
+}
+.library-switcher button.selected {
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--border));
+  background: var(--purple-light);
+  color: var(--ink);
+}
+.library-switcher strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 650;
+}
+.library-switcher small {
+  display: block;
+  margin-top: 5px;
+  font-size: 9px;
+  color: var(--secondary);
+}
+.library-symbol {
+  color: var(--accent);
+  font-size: 19px;
+}
+.library-search {
+  margin-bottom: 16px;
+}
+.library-caption {
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.collapse-topics {
+  border: 0;
+  background: none;
+  padding: 7px 0;
+  color: var(--secondary);
+  font-size: 9px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.library-group-toggle {
+  font-size: 12px;
+  padding: 13px 9px;
+}
+.library-group-toggle:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.topic-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+.library-link {
+  padding: 11px 9px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.library-links {
+  margin-left: 11px;
+}
+.current-arrow {
+  margin-left: auto;
+  color: var(--accent);
+}
+.search-section-label {
+  font-size: 10px;
+  color: var(--accent);
+  padding: 8px 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.library-now {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  margin: 10px 18px 0;
+  padding: 17px 0 20px;
+}
+.library-now .overline {
+  font-size: 8px;
+}
+.library-now a {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--secondary);
+  text-decoration: none;
+}
+.library-now a:hover {
+  color: var(--accent);
+}
+@media (max-width: 700px) {
+  .library-switcher {
+    padding-bottom: 10px;
+  }
+  .library-switcher button {
+    min-height: 52px;
+  }
+  .library-now {
+    display: none;
+  }
+  .library-link {
+    min-height: 44px;
+  }
+}

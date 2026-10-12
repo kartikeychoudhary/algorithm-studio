@@ -12,6 +12,8 @@ import InterviewLesson from "../../features/interview/InterviewLesson.jsx";
 import { interviewLessons } from "../../lib/data/interview-lessons.js";
 import ConceptLesson from "../../features/concepts/ConceptLesson.jsx";
 import DesignLesson from "../../features/design/DesignLesson.jsx";
+import CaseStudyLesson from "../../features/design/CaseStudyLesson.jsx";
+import PracticeLinks from "../../components/learning/PracticeLinks.jsx";
 
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
@@ -68,9 +70,26 @@ export default function Studio({ lessonId }) {
         <div className="lesson-tabs">
           <div role="tablist" aria-label="Lesson view">
             {[
-              ["lab", "▦ Playground"],
-              ["learn", "▤ How it works"],
-              ["code", lesson.kind ? "⌘ Walkthrough" : "⌘ Pseudocode"],
+              [
+                "lab",
+                lesson.kind === "case-study"
+                  ? "▦ Architecture"
+                  : "▦ Playground",
+              ],
+              [
+                "learn",
+                lesson.kind === "case-study"
+                  ? "▤ Decisions & failures"
+                  : "▤ How it works",
+              ],
+              [
+                "code",
+                lesson.kind === "case-study"
+                  ? "⌘ Request flow"
+                  : lesson.kind
+                    ? "⌘ Walkthrough"
+                    : "⌘ Pseudocode",
+              ],
             ].map(([id, label]) => (
               <button
                 key={id}
@@ -96,7 +115,9 @@ export default function Studio({ lessonId }) {
           aria-labelledby={`tab-${tab}`}
           key={lessonId}
         >
-          {lesson.kind === "concept" ? (
+          {lesson.kind === "case-study" ? (
+            <CaseStudyLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "concept" ? (
             <ConceptLesson id={lessonId} tab={tab} />
           ) : lesson.kind === "pattern" ? (
             <DesignLesson id={lessonId} tab={tab} />
@@ -114,6 +135,7 @@ export default function Studio({ lessonId }) {
             <KnapsackLesson tab={tab} />
           )}
         </section>
+        <PracticeLinks id={lessonId} lesson={lesson} />
         <footer>
           <span>
             Built for the <strong>“oh, now I get it”</strong> moment.
