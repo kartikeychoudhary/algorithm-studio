@@ -9,6 +9,9 @@
   "scripts": {
     "dev": "vite dev --host 127.0.0.1 --port 5173 --strictPort",
     "build": "vite build",
+    "build:cloudflare": "vite build --config vite.cloudflare.config.js",
+    "preview:cloudflare": "wrangler dev --config dist/server/wrangler.json --ip 127.0.0.1 --port 5174",
+    "deploy:cloudflare": "wrangler deploy --config dist/server/wrangler.json",
     "start": "vinext start --hostname 127.0.0.1 --port 5173",
     "test": "node --test tests/*.test.js",
     "test:components": "vitest run",
@@ -23,6 +26,7 @@
     "vinext": "^1.1.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "1.63.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^6.0.0",
@@ -30,7 +34,8 @@
     "jsdom": "^28.1.0",
     "prettier": "^3.6.2",
     "vite": "^8.0.0",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.0",
+    "wrangler": "4.149.0"
   },
   "overrides": {
     "fflate": "^0.8.3"

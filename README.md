@@ -49,6 +49,14 @@ Both server commands bind to `127.0.0.1`. Vinext builds client and server bundle
 
 </details>
 
+## ☁️ Deploy on every main update
+
+The [Cloudflare deployment workflow](.github/workflows/deploy-cloudflare.yml) tests, builds, and deploys to Cloudflare Workers on every push to `main`. It also supports manual runs on `main`.
+
+Add the repository Actions secrets **`CLOUDFLARE_API_TOKEN`**, **`CLOUDFLARE_ACCOUNT_ID`**, and **`CLOUDFLARE_DOMAIN`**. The domain must be a hostname in an active Cloudflare zone, such as `learn.example.com`. Credentials and the domain stay out of tracked configuration.
+
+See the [deployment setup guide](docs/cloudflare-deployment.md) for token permissions, custom-domain setup, and local Workers validation.
+
 ## 🧭 The playground
 
 The sidebar has three searchable, collapsible libraries: **Algorithms**, **Important Concepts**, and **System Design**. Expansion and scroll position survive navigation; search temporarily reveals matching groups.
