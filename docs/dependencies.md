@@ -8,4 +8,4 @@ As of 2026-10-11, `npm audit` reports six high-severity entries from one upstrea
 
 These dependencies process build-time glob patterns; the app does not expose glob-pattern input. There is no patched braces release available in the registry at the time of validation. Recheck when upgrading Vinext. Do not use `npm audit fix --force` blindly: its proposed Vinext downgrade crosses a major version and does not preserve the validated stack.
 
-The local development and production scripts bind to 127.0.0.1. This repository does not configure public deployment.
+The local development and production scripts bind to 127.0.0.1. Public deployment uses a separate Cloudflare Workers build through GitHub Actions; see the [deployment setup guide](cloudflare-deployment.md).

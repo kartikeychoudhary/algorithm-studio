@@ -6,7 +6,7 @@
 
 55 lessons · 26 algorithms · 6 concept labs · 23 design patterns · Dark & light themes
 
-[Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
+[Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
 </div>
 
