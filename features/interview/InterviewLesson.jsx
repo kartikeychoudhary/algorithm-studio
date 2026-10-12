@@ -54,7 +54,7 @@ export default function InterviewLesson({ id }) {
             problem={problem}
             onApply={setProblem}
           />
-          {id === "merge" ? (
+          {["merge", "quick"].includes(id) ? (
             <BarChart event={event} maximum={Math.max(...problem.values)} />
           ) : ["linked", "tree", "topo"].includes(id) ? (
             <StructureView event={event} kind={id} />

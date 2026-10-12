@@ -100,7 +100,7 @@ export default function ProblemEditor({ id, lesson, problem, onApply }) {
         <span>Edits apply when you choose Apply & restart.</span>
       </div>
       <p className="small-note editor-hint">
-        {id === "merge"
+        {["merge", "quick"].includes(id)
           ? "Use 1–16 integers from 0 to 100. Small values keep a visible minimum bar height."
           : id === "tree"
             ? "Level-order array: use null for a missing child, for example [1,null,2,3]."

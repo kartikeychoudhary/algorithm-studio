@@ -90,9 +90,9 @@ it("tree editor preserves null children and supports an empty-list preset", () =
   expect(screen.getByText("The tree is empty.")).toBeTruthy();
 });
 
-it("every lesson is available in expanded navigation without numbered or collapsed groups", () => {
+it("every lesson exists in the searchable library without category numbering", () => {
   const { container } = render(<Sidebar lessonId="merge" />);
-  const nav = screen.getByRole("navigation", { name: "Algorithm lessons" });
+  const nav = screen.getByRole("navigation", { name: "Learning library" });
   for (const id of Object.keys(lessons))
     expect(nav.querySelector(`a[href="/lessons/${id}"]`)).toBeTruthy();
   expect(nav.querySelector("details,.module-index,.count")).toBeNull();

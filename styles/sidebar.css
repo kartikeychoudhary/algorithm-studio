@@ -354,3 +354,71 @@
     transition: none;
   }
 }
+/* Category expansion is independent of route and search state. */
+.library-section {
+  margin: 0 0 12px;
+}
+.library-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 10px;
+  color: var(--ink);
+  font:
+    650 12px "DM Sans",
+    sans-serif;
+  margin-bottom: 8px;
+}
+.library-group {
+  margin-bottom: 4px;
+}
+.library-group h2 {
+  padding: 0;
+}
+.library-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  width: 100%;
+  padding: 10px;
+  color: var(--secondary);
+  background: transparent;
+  border: 0;
+  font:
+    600 11px "DM Sans",
+    sans-serif;
+}
+.library-group-toggle:hover {
+  color: var(--ink);
+}
+.nav-chevron {
+  margin-left: auto;
+  color: var(--secondary);
+  font-size: 16px;
+}
+.library-nav [hidden] {
+  display: none;
+}
+.library-links {
+  margin: 0 0 10px 7px;
+  padding-left: 3px;
+  border-left: 1px solid var(--border);
+}
+.library-link {
+  font-size: 11px;
+}
+@media (max-width: 700px) {
+  .library-group-toggle {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .library-link {
+    font-size: 12px;
+  }
+}

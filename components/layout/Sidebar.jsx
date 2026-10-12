@@ -2,8 +2,13 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { lessons } from "../../lib/data/lessons.js";
-import { navigationGroups } from "../../lib/data/navigation.js";
+import {
+  navigationSections,
+  groupKey,
+  lessonAncestors,
+} from "../../lib/data/navigation.js";
 
+const expandedKey = "algorithm-studio-navigation-expanded";
 const scrollKey = "algorithm-studio-navigation-scroll";
 const names = {
   ttt: "Tic-tac-toe",
@@ -39,24 +44,66 @@ function CategoryIcon({ index }) {
 
 export default function Sidebar({ lessonId }) {
   const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState(() => lessonAncestors(lessonId));
+  const [navigationReady, setNavigationReady] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef(null);
   const browseTop = useRef(0);
   const restored = useRef(false);
   const term = query.trim().toLowerCase();
-  const groups = navigationGroups
-    .map((group, index) => ({
-      ...group,
-      index,
-      ids: group.ids.filter((id) =>
-        `${names[id] || lessons[id].label} ${group.title} ${lessons[id].problem?.name || ""}`
-          .toLowerCase()
-          .includes(term),
-      ),
+  const sections = navigationSections
+    .map((section) => ({
+      ...section,
+      groups: section.groups
+        .map((group, index) => ({
+          ...group,
+          index,
+          ids: group.ids.filter((id) =>
+            (names[id] || lessons[id].label)
+              .concat(
+                " ",
+                group.title,
+                " ",
+                section.title,
+                " ",
+                lessons[id].problem?.name || "",
+              )
+              .toLowerCase()
+              .includes(term),
+          ),
+        }))
+        .filter((group) => group.ids.length),
     }))
-    .filter((group) => group.ids.length);
+    .filter((section) => section.groups.length);
+  useLayoutEffect(() => {
+    let saved = [];
+    try {
+      const value = JSON.parse(sessionStorage.getItem(expandedKey));
+      if (Array.isArray(value))
+        saved = value.filter((key) => typeof key === "string");
+    } catch {}
+    const next = [...new Set([...saved, ...lessonAncestors(lessonId)])];
+    setExpanded(next);
+    setNavigationReady(true);
+    try {
+      sessionStorage.setItem(expandedKey, JSON.stringify(next));
+    } catch {}
+  }, [lessonId]);
+  function toggleGroup(key) {
+    setExpanded((previous) => {
+      const next = previous.includes(key)
+        ? previous.filter((k) => k !== key)
+        : [...previous, key];
+      try {
+        sessionStorage.setItem(expandedKey, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  }
+  const isOpen = (key) => !!term || expanded.includes(key);
 
   useLayoutEffect(() => {
+    if (!navigationReady) return;
     if (!restored.current) {
       try {
         browseTop.current = Math.max(
@@ -67,10 +114,10 @@ export default function Sidebar({ lessonId }) {
       restored.current = true;
     }
     navRef.current.scrollTop = term ? 0 : browseTop.current;
-  }, [term, mobileOpen]);
+  }, [term, mobileOpen, navigationReady]);
 
   function rememberScroll(event) {
-    if (term) return;
+    if (term || !navigationReady) return;
     browseTop.current = event.currentTarget.scrollTop;
     try {
       sessionStorage.setItem(scrollKey, String(browseTop.current));
@@ -135,50 +182,94 @@ export default function Sidebar({ lessonId }) {
         </div>
         <nav
           className="library-nav"
-          aria-label="Algorithm lessons"
+          aria-label="Learning library"
           ref={navRef}
           onScroll={rememberScroll}
         >
-          {groups.map((group) => (
-            <section
-              className="library-group"
-              key={group.title}
-              aria-label={group.title}
-            >
-              <h2>
-                <CategoryIcon index={group.index} />
-                {group.title}
-              </h2>
-              <div className="library-links">
-                {group.ids.map((id) => (
-                  <Link
-                    key={id}
-                    href={`/lessons/${id}`}
-                    scroll={false}
-                    aria-current={id === lessonId ? "page" : undefined}
-                    className={`library-link ${id === lessonId ? "is-current" : ""}`}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <span className="lesson-indicator" aria-hidden="true" />
-                    <span>{names[id] || lessons[id].label}</span>
-                    {id === lessonId && (
-                      <svg
-                        className="lesson-arrow"
-                        viewBox="0 0 20 20"
-                        aria-hidden="true"
+          {sections.map((section) => (
+            <section className="library-section" key={section.id}>
+              <button
+                className="library-section-toggle"
+                aria-expanded={isOpen(section.id)}
+                aria-controls={"nav-" + section.id}
+                onClick={() => toggleGroup(section.id)}
+              >
+                <span>{section.title}</span>
+                <span className="nav-chevron" aria-hidden="true">
+                  {isOpen(section.id) ? "⌄" : "›"}
+                </span>
+              </button>
+              <div id={"nav-" + section.id} hidden={!isOpen(section.id)}>
+                {section.groups.map((group) => {
+                  const key = groupKey(section, group),
+                    open = isOpen(key),
+                    contentId = "nav-" + section.id + "-" + group.index;
+                  return (
+                    <section
+                      className="library-group"
+                      key={key}
+                      aria-label={group.title}
+                    >
+                      <h2>
+                        <button
+                          className="library-group-toggle"
+                          aria-expanded={open}
+                          aria-controls={contentId}
+                          onClick={() => toggleGroup(key)}
+                        >
+                          <CategoryIcon
+                            index={group.index % iconPaths.length}
+                          />
+                          <span>{group.title}</span>
+                          <span className="nav-chevron" aria-hidden="true">
+                            {open ? "⌄" : "›"}
+                          </span>
+                        </button>
+                      </h2>
+                      <div
+                        className="library-links"
+                        id={contentId}
+                        hidden={!open}
                       >
-                        <path d="M4 10h11m-4-4 4 4-4 4" />
-                      </svg>
-                    )}
-                  </Link>
-                ))}
+                        {group.ids.map((id) => (
+                          <Link
+                            key={id}
+                            href={"/lessons/" + id}
+                            scroll={false}
+                            aria-current={id === lessonId ? "page" : undefined}
+                            className={
+                              "library-link " +
+                              (id === lessonId ? "is-current" : "")
+                            }
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            <span
+                              className="lesson-indicator"
+                              aria-hidden="true"
+                            />
+                            <span>{names[id] || lessons[id].label}</span>
+                            {id === lessonId && (
+                              <svg
+                                className="lesson-arrow"
+                                viewBox="0 0 20 20"
+                                aria-hidden="true"
+                              >
+                                <path d="M4 10h11m-4-4 4 4-4 4" />
+                              </svg>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })}
               </div>
             </section>
           ))}
-          {!groups.length && (
+          {!sections.length && (
             <div className="library-empty" role="status">
               <strong>No lessons found</strong>
-              <p>Try a topic like graphs, tree, or sorting.</p>
+              <p>Try a topic like graphs, SOLID, or Strategy.</p>
               <button onClick={() => setQuery("")}>Show all lessons</button>
             </div>
           )}

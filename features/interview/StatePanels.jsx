@@ -25,7 +25,9 @@ export default function StatePanels({ event }) {
       )}
       {event.entries && (
         <div className="state-shelf">
-          <span className="overline">SEEN MAP · VALUE → ORIGINAL INDEX</span>
+          <span className="overline">
+            {event.entriesTitle || "SEEN MAP · VALUE → ORIGINAL INDEX"}
+          </span>
           <div className="value-chips">
             {event.entries.length ? (
               event.entries.map(([key, value]) => (
@@ -42,7 +44,9 @@ export default function StatePanels({ event }) {
       {event.output && <Chips title="OUTPUT" values={event.output} />}
       {event.dp && (
         <div className="state-shelf">
-          <span className="overline">MINIMUM COINS BY AMOUNT</span>
+          <span className="overline">
+            {event.dpTitle || "MINIMUM COINS BY AMOUNT"}
+          </span>
           <div className="coin-table">
             {event.dp.map((value, i) => (
               <div

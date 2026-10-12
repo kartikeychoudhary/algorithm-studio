@@ -2,9 +2,9 @@
 
 ![Algorithm Studio — Understand the why. Watch the how.](docs/assets/cover.svg)
 
-**An interactive workspace for learning algorithms and practicing interview patterns.**
+**A visual workspace for algorithms, engineering concepts, and software design patterns.**
 
-20 lessons · Editable examples · Live pseudocode · Rewindable execution · Dark & light themes
+55 lessons · 26 algorithms · 6 concept labs · 23 design patterns · Dark & light themes
 
 [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -22,7 +22,7 @@ Algorithm Studio makes those questions visible. Edit the problem, step through t
 | :--------------------------------------------------------------------- | :---------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
 | Change arrays, targets, capacities, terrain, edges, or flight budgets. | Follow pointers, queues, stacks, recursion, heaps, and DP tables. | Use the invariant, pattern cues, and common pitfalls to explain _why_ an algorithm works. |
 
-Every lesson includes an interactive playground, an explanation, and pseudocode. Playback supports **step, back, play/pause, restart, finish, and speed control**. Execution snapshots come from the solvers themselves.
+Algorithm lessons include an interactive playground, an explanation, and pseudocode. Playback supports **step, back, play/pause, restart, finish, and speed control**. Algorithm execution snapshots come from the solvers themselves. Concept labs use interactive scenarios and controls; design patterns use step-by-step diagrams and pseudocode.
 
 ## 🚀 Start in two commands
 
@@ -50,6 +50,46 @@ Both server commands bind to `127.0.0.1`. Vinext builds client and server bundle
 </details>
 
 ## 🧭 The playground
+
+The sidebar has three searchable, collapsible libraries: **Algorithms**, **Important Concepts**, and **System Design**. Expansion and scroll position survive navigation; search temporarily reveals matching groups.
+
+### Important Concepts
+
+| Lesson                                    | Interactive example                                                                                                                   |
+| :---------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| **ACID** · `/lessons/acid`                | Transfer money, fail after a debit, inspect the committed reader view, and recover a committed transaction.                           |
+| **SOLID** · `/lessons/solid`              | Five distinct object-interaction walkthroughs: responsibilities, extension, substitution, small interfaces, and dependency inversion. |
+| **CAP** · `/lessons/cap`                  | Break a replication link, write a new version, and choose between rejecting an isolated read or serving a stale value.                |
+| **OOP** · `/lessons/oop`                  | Encapsulation, abstraction, inheritance, and polymorphism through accounts and drawing objects.                                       |
+| **DRY / KISS / YAGNI** · `/lessons/clean` | Shared domain knowledge, direct solutions, and deferring speculative features.                                                        |
+| **Big O** · `/lessons/complexity`         | Change input size and compare six idealized growth models with exact counts.                                                          |
+
+The database and network labs are in-memory teaching models. CAP consistency means linearizability; ACID consistency concerns application invariants. The examples make this distinction explicit.
+
+### System Design · Design patterns
+
+These are the **23 classic object-oriented design patterns**, grouped by purpose. They complement broader system design; they are not deployment architectures.
+
+| Category       | Individual lessons                                                                                                              |
+| :------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| **Creational** | Factory Method, Abstract Factory, Builder, Prototype, Singleton                                                                 |
+| **Structural** | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy                                                                 |
+| **Behavioral** | Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor, Interpreter |
+
+Each lesson contains a concrete scenario, a diagram that highlights each call or response, pseudocode, playback, an everyday analogy, use cases, and tradeoffs. Try `/lessons/observer`, `/lessons/adapter`, or `/lessons/builder`.
+
+### More interview essentials
+
+| Algorithm                          | Route             | What changes as you step                                                        |
+| :--------------------------------- | :---------------- | :------------------------------------------------------------------------------ |
+| **Quicksort**                      | `/lessons/quick`  | Pivot, partition boundary, swaps, and height-based sorting bars.                |
+| **Kadane**                         | `/lessons/kadane` | Extend the current range or start over; preserve the best sum.                  |
+| **Prefix sums**                    | `/lessons/prefix` | Count earlier prefixes to find target-sum subarrays, including negative values. |
+| **Longest increasing subsequence** | `/lessons/lis`    | Compare earlier values and build the length ending at each index.               |
+| **House Robber**                   | `/lessons/robber` | Compare taking a house with skipping it in a DP table.                          |
+| **Jump Game**                      | `/lessons/jump`   | Grow a reachable frontier or detect an unreachable gap.                         |
+
+Quicksort uses a fixed final-element pivot for teaching: average O(n log n), worst-case O(n²). The LIS lesson uses O(n²) DP; faster variants are separate techniques.
 
 ### Arrays & searching
 
@@ -107,7 +147,7 @@ BFS, DFS, Dijkstra, and A* share editable grids and weighted networks. Add walls
 
 ## ⌨️ Practice with familiar inputs
 
-The twelve interview lessons include a linked LeetCode problem, a worked example, editable named inputs, and the algorithm’s return value. Input arrays use bracket notation; the animation and highlighted pseudocode use the same data.
+The eighteen interview lessons include a linked LeetCode problem, a worked example, editable named inputs, and the algorithm’s return value. Input arrays use bracket notation; the animation and highlighted pseudocode use the same data.
 
 | Pattern                | Example input                                               | Return value                  |
 | :--------------------- | :---------------------------------------------------------- | :---------------------------- |
@@ -143,10 +183,13 @@ Built-in scenarios include missing targets, duplicate pairs, all-negative window
 ```text
 app/                        Routes, root layout, and 404 page
 components/
-  layout/                   Navigation, guides, and shared lesson state
+  layout/                   Persistent navigation, guides, and shared lesson state
+  learning/                 Reusable scenario diagrams and walkthrough playback
   execution/                Pseudocode, variables, explanations, playback controls
   ui/                       Shared panels and validated numeric fields
 features/
+  concepts/                 ACID, CAP, growth explorer, and principle lessons
+  design/                   Design-pattern lesson presentation
   interview/                Editors, arrays, structures, and trace-state panels
   minimax/                  Tic-tac-toe and chess boards
   knapsack/                 Inventory and dynamic programming table
@@ -154,7 +197,8 @@ features/
 hooks/                      Playback timing and cleanup
 lib/
   algorithms/               Pure solvers and immutable trace generators
-  data/                     Lesson catalog, examples, and graph presets
+  data/                     Lesson catalog, examples, pattern scenarios, and presets
+  learning/                 Transaction, replica, and walkthrough state models
 styles/                     Responsive layout and theme tokens
 tests/                      Reference comparisons and React interaction tests
 docs/                       README artwork and dependency notes
@@ -182,7 +226,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; every category uses the same expanded navigation style.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under the three collapsible libraries.
 
 </details>
 
@@ -196,7 +240,7 @@ npm run check            # All three checks
 npm run format           # Format source and documentation
 ```
 
-Algorithm and React interaction tests cover exhaustive pair checks, reference sorting, heap invariants, every valid window size, independent tree traversal, coin change against BFS, power-set comparison, cycle detection, pathfinding references, bounded-flight enumeration, and adversarial tic-tac-toe play.
+Algorithm and React interaction tests cover exhaustive pair checks, reference sorting, heap invariants, every valid window size, independent tree traversal, coin change against BFS, power-set comparison, cycle detection, pathfinding references, bounded-flight enumeration, adversarial tic-tac-toe play, exhaustive checks for the added algorithms, ACID rollback/recovery invariants, CAP partition behavior, all pattern diagrams, and persisted sidebar expansion.
 
 GitHub Actions is configured to run `npm run check` on pushes and pull requests. Local test results are independent of GitHub runner availability.
 

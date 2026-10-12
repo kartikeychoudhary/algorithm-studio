@@ -3,7 +3,7 @@ export default function BarChart({ event, maximum }) {
     <div
       className="array-visual sorting-bars"
       role="img"
-      aria-label="Merge sort bar chart: height represents value"
+      aria-label="Sorting bar chart: height represents value"
     >
       {event.values.map((value, i) => (
         <div

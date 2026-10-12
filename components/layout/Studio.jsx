@@ -10,6 +10,8 @@ import KnapsackLesson from "../../features/knapsack/KnapsackLesson.jsx";
 import GraphLesson from "../../features/graphs/GraphLesson.jsx";
 import InterviewLesson from "../../features/interview/InterviewLesson.jsx";
 import { interviewLessons } from "../../lib/data/interview-lessons.js";
+import ConceptLesson from "../../features/concepts/ConceptLesson.jsx";
+import DesignLesson from "../../features/design/DesignLesson.jsx";
 
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
@@ -34,7 +36,7 @@ export default function Studio({ lessonId }) {
     <div className="workspace">
       <header className="topbar">
         <div className="breadcrumb">
-          Algorithms <span>/</span>
+          {lesson.section || "Algorithms"} <span>/</span>
           {lesson.topic}
           <span>/</span>
           <strong>{lesson.label}</strong>
@@ -56,17 +58,19 @@ export default function Studio({ lessonId }) {
             <h1>{lesson.title}</h1>
             <p className="intro">{lesson.subtitle}</p>
           </div>
-          <div className="complexity">
-            <span>TIME COMPLEXITY</span>
-            <strong>{lesson.complexity}</strong>
-          </div>
+          {lesson.complexity && (
+            <div className="complexity">
+              <span>TIME COMPLEXITY</span>
+              <strong>{lesson.complexity}</strong>
+            </div>
+          )}
         </div>
         <div className="lesson-tabs">
           <div role="tablist" aria-label="Lesson view">
             {[
               ["lab", "▦ Playground"],
               ["learn", "▤ How it works"],
-              ["code", "⌘ Pseudocode"],
+              ["code", lesson.kind ? "⌘ Walkthrough" : "⌘ Pseudocode"],
             ].map(([id, label]) => (
               <button
                 key={id}
@@ -92,7 +96,11 @@ export default function Studio({ lessonId }) {
           aria-labelledby={`tab-${tab}`}
           key={lessonId}
         >
-          {tab === "learn" ? (
+          {lesson.kind === "concept" ? (
+            <ConceptLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "pattern" ? (
+            <DesignLesson id={lessonId} tab={tab} />
+          ) : tab === "learn" ? (
             <LessonGuide lessonId={lessonId} onOpen={() => setTab("lab")} />
           ) : interviewLessons[lessonId] ? (
             <InterviewLesson id={lessonId} key={lessonId} />

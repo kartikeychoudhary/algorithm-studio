@@ -17,7 +17,7 @@ it("keeps the same navigation node and scroll position across lesson routes", ()
       <main>Coin change lesson</main>
     </StudioShell>,
   );
-  const nav = screen.getByRole("navigation", { name: "Algorithm lessons" });
+  const nav = screen.getByRole("navigation", { name: "Learning library" });
   nav.scrollTop = 640;
   fireEvent.scroll(nav);
   route.pathname = "/lessons/subsets";
@@ -26,7 +26,7 @@ it("keeps the same navigation node and scroll position across lesson routes", ()
       <main>Subsets lesson</main>
     </StudioShell>,
   );
-  expect(screen.getByRole("navigation", { name: "Algorithm lessons" })).toBe(
+  expect(screen.getByRole("navigation", { name: "Learning library" })).toBe(
     nav,
   );
   expect(nav.scrollTop).toBe(640);
@@ -42,12 +42,12 @@ it("keeps the same navigation node and scroll position across lesson routes", ()
 
 it("restores browsing position after a remount and after clearing a search", () => {
   const first = render(<Sidebar lessonId="coins" />);
-  let nav = screen.getByRole("navigation", { name: "Algorithm lessons" });
+  let nav = screen.getByRole("navigation", { name: "Learning library" });
   nav.scrollTop = 520;
   fireEvent.scroll(nav);
   first.unmount();
   render(<Sidebar lessonId="subsets" />);
-  nav = screen.getByRole("navigation", { name: "Algorithm lessons" });
+  nav = screen.getByRole("navigation", { name: "Learning library" });
   expect(nav.scrollTop).toBe(520);
   fireEvent.change(screen.getByRole("textbox", { name: "Find a lesson" }), {
     target: { value: "daily temperatures" },
@@ -68,9 +68,34 @@ it("filters by category, recovers from no results, and toggles the mobile librar
   fireEvent.change(input, { target: { value: "does not exist" } });
   expect(screen.getByRole("status").textContent).toContain("No lessons found");
   fireEvent.click(screen.getByRole("button", { name: "Show all lessons" }));
-  expect(screen.getAllByRole("link").length).toBe(21);
+  expect(
+    screen.getByRole("button", { name: "Important Concepts" }),
+  ).toBeTruthy();
+  expect(screen.getByRole("button", { name: "System Design" })).toBeTruthy();
   fireEvent.click(screen.getByRole("button", { name: "Lessons" }));
   expect(
     screen.getByRole("button", { name: "Close" }).getAttribute("aria-expanded"),
   ).toBe("true");
+});
+it("collapsed categories persist while search temporarily reveals matching lessons", () => {
+  const view = render(<Sidebar lessonId="coins" />);
+  expect(
+    screen
+      .getByRole("button", { name: "System Design" })
+      .getAttribute("aria-expanded"),
+  ).toBe("false");
+  fireEvent.click(screen.getByRole("button", { name: "System Design" }));
+  fireEvent.click(screen.getByRole("button", { name: "Structural patterns" }));
+  expect(screen.getByRole("link", { name: "Adapter" })).toBeTruthy();
+  view.unmount();
+  render(<Sidebar lessonId="coins" />);
+  expect(screen.getByRole("link", { name: "Adapter" })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Structural patterns" }));
+  expect(screen.queryByRole("link", { name: "Adapter" })).toBeNull();
+  fireEvent.change(screen.getByRole("textbox", { name: "Find a lesson" }), {
+    target: { value: "Adapter" },
+  });
+  expect(screen.getByRole("link", { name: "Adapter" })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Clear lesson search" }));
+  expect(screen.queryByRole("link", { name: "Adapter" })).toBeNull();
 });
