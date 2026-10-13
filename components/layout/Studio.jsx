@@ -14,6 +14,11 @@ import ConceptLesson from "../../features/concepts/ConceptLesson.jsx";
 import DesignLesson from "../../features/design/DesignLesson.jsx";
 import CaseStudyLesson from "../../features/design/CaseStudyLesson.jsx";
 import PracticeLinks from "../../components/learning/PracticeLinks.jsx";
+import LabLesson from "../../features/interview/LabLesson.jsx";
+import FoundationLesson from "../../features/concepts/FoundationLesson.jsx";
+import SpringLesson from "../../features/spring/SpringLesson.jsx";
+import PracticeLesson from "../../features/practice/PracticeLesson.jsx";
+import LessonProgress from "../learning/LessonProgress.jsx";
 
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
@@ -67,6 +72,7 @@ export default function Studio({ lessonId }) {
             </div>
           )}
         </div>
+        <LessonProgress id={lessonId} />
         <div className="lesson-tabs">
           <div role="tablist" aria-label="Lesson view">
             {[
@@ -115,7 +121,15 @@ export default function Studio({ lessonId }) {
           aria-labelledby={`tab-${tab}`}
           key={lessonId}
         >
-          {lesson.kind === "case-study" ? (
+          {lesson.kind === "spring" ? (
+            <SpringLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "algorithm-lab" ? (
+            <LabLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "foundation" ? (
+            <FoundationLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "practice" ? (
+            <PracticeLesson id={lessonId} />
+          ) : lesson.kind === "case-study" ? (
             <CaseStudyLesson id={lessonId} tab={tab} />
           ) : lesson.kind === "concept" ? (
             <ConceptLesson id={lessonId} tab={tab} />

@@ -2,9 +2,9 @@
 
 ![Algorithm Studio — Understand the why. Watch the how.](docs/assets/cover.svg)
 
-**A visual workspace for algorithms, engineering concepts, and software design patterns.**
+**A visual workspace for algorithms, engineering concepts, system design, and Spring.**
 
-70 lessons · 32 algorithms · 13 concept labs · 23 design patterns · 2 case studies
+98 lessons · 40 algorithms · 18 concepts · 23 patterns · 6 case studies · 8 Spring lessons · 3 practice tools
 
 [Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -59,7 +59,36 @@ See the [deployment setup guide](docs/cloudflare-deployment.md) for token permis
 
 ## 🧭 The playground
 
-Switch between four focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, and **Case Studies**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+Switch between six focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+
+### Active practice
+
+- **Predict before revealing:** choose the next event in a narrated trace before advancing. Regular playback remains available when prediction mode is off.
+- **[Compare approaches](https://algo.kartikey.cv/lessons/compare):** step a linear scan and binary search together; compare actual value comparisons and modeled auxiliary variables on the same sorted input.
+- **[Find the bug](https://algo.kartikey.cv/lessons/debug):** repair an inclusive search boundary and run failing/passing cases.
+- **[My study roadmap](https://algo.kartikey.cv/lessons/roadmap):** suggested prerequisites, bookmarks, confidence, a weak-topic review list, and manually tracked solved LeetCode questions. Progress is stored in this browser.
+- **Share traces:** the 24 named-input interview lessons and eight new algorithm labs can copy a URL containing validated inputs and the current execution step. Input values are visible to anyone with the link.
+
+### Spring, from startup to response
+
+| Lesson                                                                         | Follow the flow                                                                                                                                                                      |
+| :----------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **[How Spring Boot starts](https://algo.kartikey.cv/lessons/spring-boot)**     | Environment → context → definitions → bean initialization → web server → runners → readiness; conditional auto-configuration.                                                        |
+| **Beans & dependency injection**                                               | Construction, dependency resolution, lifecycle callbacks, and post-processing/proxies.                                                                                               |
+| **[HTTP request → response](https://algo.kartikey.cv/lessons/spring-request)** | Servlet filters → security → DispatcherServlet → argument conversion/validation → controller → transactional service → repository/DB → JSON serialization → filter cleanup → client. |
+| **Security filter flow**                                                       | Authentication, authorization, chain selection, and an API rejection before controller invocation.                                                                                   |
+| **Transactions & proxy boundaries**                                            | Commit, rollback, and self-invocation bypassing proxy advice.                                                                                                                        |
+| **Async, scheduling & events**                                                 | Executor handoff, caller/worker separation, synchronous events, and scheduling caveats.                                                                                              |
+| **Caching interception**                                                       | Miss/hit paths and the differences between Cacheable, CachePut, and CacheEvict.                                                                                                      |
+| **[Annotation explorer](https://algo.kartikey.cv/lessons/spring-annotations)** | Search 32 annotations; inspect examples, processors, behavioral diagrams, prerequisites, and pitfalls.                                                                               |
+
+Spring examples model servlet-based Spring MVC unless stated otherwise. They describe framework behavior without running Java in the browser. Lessons link to official Spring references; proxies, transaction scope, validation, and response timing are explicit.
+
+### More algorithm and foundation labs
+
+The latest algorithms add **tries**, **interval merging**, **Top K frequency buckets**, **longest common subsequence**, **N-Queens**, **9×9 Sudoku**, **lower bound**, and **binary search on shipping capacity**. Edit bounded JSON inputs and inspect trees, timeline bars, DP tables, constraint boards, and execution traces. Sudoku uses zero for empty cells and bounds both missing clues and search work.
+
+New foundation labs cover **race conditions and locks**, **database isolation anomalies**, **DNS/TCP/TLS/HTTP**, **retries and circuit breakers**, and **stack/heap reachability plus the JavaScript event loop**. The concurrency lab lets you choose the thread interleaving; the memory lab lets you allocate, release roots, and collect unreachable objects.
 
 ### System-design case studies
 
@@ -69,8 +98,14 @@ Build a complete interview answer by connecting requirements to concrete decisio
 | :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **[URL shortener](https://algo.kartikey.cv/lessons/shortener)**         | Cache hits, misses, and outages; unique codes, replicas, hot keys, sharding, rate limits, and asynchronous analytics.                                  |
 | **[Order & payment system](https://algo.kartikey.cv/lessons/checkout)** | Successful payment, duplicate requests, and declined payments; inventory transactions, idempotency, a transactional outbox, retries, and compensation. |
+| **[Chat application](https://algo.kartikey.cv/lessons/chat)**           | Durable acceptance, per-conversation order, sockets, presence, receipts, and gap recovery.                                                             |
+| **[News feed](https://algo.kartikey.cv/lessons/feed)**                  | Hybrid fan-out, celebrity reads, cursor pagination, privacy filtering, and retryable fan-out jobs.                                                     |
+| **[File storage](https://algo.kartikey.cv/lessons/storage)**            | Multipart uploads, checksums, metadata reconciliation, signed downloads, scanning, and orphan cleanup.                                                 |
+| **[Distributed scheduler](https://algo.kartikey.cv/lessons/scheduler)** | Atomic claims, leases, fencing tokens, retries, deduplication, and dead-letter handling.                                                               |
 
 Capacity figures are illustrative estimates. These are teaching simulations, with explicit assumptions and tradeoffs—not deployed databases or payment integrations.
+
+Every case also includes **Break the system**: inject a traffic spike, cache/database outage, slow dependency, or paused workers. A shared simplified capacity model computes attempts, failures, queue growth, drain delay, and dropped events. Its cache-hit, worker-rate, retry, and circuit assumptions are stated beside the controls rather than presented as production predictions.
 
 ### Important Concepts
 
@@ -229,7 +264,9 @@ features/
   minimax/                  Tic-tac-toe and chess boards
   knapsack/                 Inventory and dynamic programming table
   graphs/                   Grid, network, edge editor, and graph inspector
-hooks/                      Playback timing and cleanup
+  spring/                   Startup, request lifecycle, and annotation walkthroughs
+  practice/                 Study roadmap, comparison lab, and debugging exercises
+hooks/                      Playback, shared inputs, and local study progress
 lib/
   algorithms/               Pure solvers and immutable trace generators
   data/                     Lesson catalog, examples, pattern scenarios, and presets
@@ -261,7 +298,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under four focused libraries. Curated practice links live in `lib/data/practice.js` and case-study scenarios in `lib/data/case-studies.js`.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under six focused libraries. Curated practice links live in `lib/data/practice.js`; the new algorithm, foundation, Spring, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
 
 </details>
 

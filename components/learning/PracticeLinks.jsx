@@ -1,5 +1,7 @@
 import { practiceFor } from "../../lib/data/practice.js";
+import { useProgress } from "../../hooks/useProgress.js";
 export default function PracticeLinks({ id, lesson }) {
+  const { progress, update } = useProgress();
   const problems = practiceFor(id, lesson);
   if (!problems.length) return null;
   return (
@@ -13,20 +15,31 @@ export default function PracticeLinks({ id, lesson }) {
       </div>
       <div className="practice-grid">
         {problems.map((p) => (
-          <a
-            key={p.url}
-            href={p.url}
-            target="_blank"
-            rel="noreferrer"
-            className="practice-card"
-          >
-            <span className="practice-meta">
-              {p.number} · {p.difficulty}
-              <span aria-hidden="true">↗</span>
-            </span>
-            <h3>{p.name}</h3>
-            <p>{p.reason}</p>
-          </a>
+          <div key={p.url}>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noreferrer"
+              className="practice-card"
+            >
+              <span className="practice-meta">
+                {p.number} · {p.difficulty}
+                <span aria-hidden="true">↗</span>
+              </span>
+              <h3>{p.name}</h3>
+              <p>{p.reason}</p>
+            </a>
+            <label className="problem-solved">
+              <input
+                type="checkbox"
+                checked={!!progress[`problem:${p.number}`]?.solved}
+                onChange={(e) =>
+                  update(`problem:${p.number}`, { solved: e.target.checked })
+                }
+              />{" "}
+              I solved this problem
+            </label>
+          </div>
         ))}
       </div>
     </section>

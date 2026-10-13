@@ -25,12 +25,14 @@ const names = {
   subsets: "Subsets",
   linked: "Reverse linked list",
 };
-const symbols = ["⌘", "◇", "▧", "◈"];
+const symbols = ["⌘", "◇", "▧", "◈", "♧", "✓"];
 const subtitles = [
   "Solve & trace",
   "Build understanding",
   "Shape your code",
   "Connect the pieces",
+  "Follow the framework",
+  "Test your understanding",
 ];
 export default function Sidebar({ lessonId }) {
   const ancestors = lessonAncestors(lessonId);
@@ -51,7 +53,7 @@ export default function Sidebar({ lessonId }) {
           ...group,
           index,
           ids: group.ids.filter((id) =>
-            `${names[id] || lessons[id].label} ${group.title} ${section.title} ${lessons[id].problem?.name || ""}`
+            `${names[id] || lessons[id].label} ${group.title} ${section.title} ${lessons[id].problem?.name || ""} ${lessons[id].subtitle || ""}`
               .toLowerCase()
               .includes(term),
           ),

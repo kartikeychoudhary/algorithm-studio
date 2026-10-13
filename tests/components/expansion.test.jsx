@@ -59,7 +59,14 @@ it.each(Object.keys(caseStudies))(
     expect(screen.getByRole("button", { name: /Back/ }).disabled).toBe(true);
     fireEvent.click(screen.getByRole("button", { name: "Finish" }));
     expect(container.querySelector(".scenario-state").textContent).toContain(
-      id === "checkout" ? "one order only" : "redirect ready",
+      {
+        chat: "caught up",
+        feed: "feed page",
+        storage: "bytes delivered",
+        scheduler: "succeeded",
+        checkout: "one order only",
+        shortener: "redirect ready",
+      }[id],
     );
   },
 );

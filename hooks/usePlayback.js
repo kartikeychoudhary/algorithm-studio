@@ -2,15 +2,15 @@
 import { useEffect, useState } from "react";
 
 /** Owns playback timing; unmounting or replacing a trace always cancels its timer. */
-export function usePlayback(run) {
+export function usePlayback(run, initialIndex = 0) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(450);
   const last = Math.max(0, run.events.length - 1);
   useEffect(() => {
-    setIndex(0);
+    setIndex(Math.max(0, Math.min(last, initialIndex)));
     setPlaying(false);
-  }, [run]);
+  }, [run, initialIndex]);
   useEffect(() => {
     if (!playing || index >= last) return;
     const timer = setInterval(
@@ -27,6 +27,7 @@ export function usePlayback(run) {
     setIndex(Math.max(0, Math.min(last, position)));
   };
   return {
+    run,
     index: Math.min(index, last),
     playing,
     speed,

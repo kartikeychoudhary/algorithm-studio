@@ -2,7 +2,6 @@
 import { useMemo } from "react";
 import { interviewLessons } from "../../lib/data/interview-lessons.js";
 import { parseProblem, runInterview } from "../../lib/algorithms/interview.js";
-import { useLessonState } from "../../components/layout/StudioProvider.jsx";
 import { usePlayback } from "../../hooks/usePlayback.js";
 import { Panel, LearningStrip } from "../../components/ui/Panel.jsx";
 import CodePanel from "../../components/execution/CodePanel.jsx";
@@ -16,6 +15,8 @@ import ProblemEditor from "./ProblemEditor.jsx";
 import BarChart from "./BarChart.jsx";
 import ProblemContext from "./ProblemContext.jsx";
 import WaterChart from "./WaterChart.jsx";
+import { useSharedInput } from "../../hooks/useSharedInput.js";
+import ShareTrace from "../../components/learning/ShareTrace.jsx";
 
 export default function InterviewLesson({ id }) {
   const lesson = interviewLessons[id];
@@ -29,9 +30,23 @@ export default function InterviewLesson({ id }) {
       ),
     [id, lesson],
   );
-  const [problem, setProblem] = useLessonState(id, initial);
+  const {
+    input: problem,
+    setInput: setProblem,
+    start,
+    shareError,
+  } = useSharedInput(id, initial, (p) =>
+    parseProblem(
+      id,
+      JSON.stringify(p.values),
+      p.parameter,
+      JSON.stringify(
+        id === "topo" ? (p.edges || []).map(([a, b]) => [b, a]) : p.edges || [],
+      ),
+    ),
+  );
   const run = useMemo(() => runInterview(id, problem), [id, problem]);
-  const playback = usePlayback(run),
+  const playback = usePlayback(run, start),
     event = run.events[playback.index];
   return (
     <>
@@ -49,7 +64,9 @@ export default function InterviewLesson({ id }) {
           }
         >
           <ProblemContext lesson={lesson} />
+          {shareError && <p role="alert">{shareError}</p>}
           <ProblemEditor
+            key={JSON.stringify(problem)}
             id={id}
             lesson={lesson}
             problem={problem}
@@ -91,6 +108,7 @@ export default function InterviewLesson({ id }) {
         <section className="trace-side">
           <CodePanel code={run.code} event={event} />
           <VariableWatch variables={event.vars} />
+          <ShareTrace id={id} input={problem} index={playback.index} />
           <div className="interview-tip">
             <span className="overline">RECOGNIZE THE PATTERN</span>
             <p>{lesson.recognize}</p>

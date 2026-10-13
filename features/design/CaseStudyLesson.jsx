@@ -4,6 +4,7 @@ import Link from "next/link";
 import { caseStudies } from "../../lib/data/case-studies.js";
 import { lessons } from "../../lib/data/lessons.js";
 import Walkthrough from "../../components/learning/Walkthrough.jsx";
+import FailureLab from "../../components/learning/FailureLab.jsx";
 
 export function capacityEstimate(dailyMillions, peak, cacheHit) {
   const average = (dailyMillions * 1e6) / 86400;
@@ -48,8 +49,9 @@ export default function CaseStudyLesson({ id, tab }) {
               <h2>Size the workload</h2>
               <p>Illustrative assumptions, not a production benchmark.</p>
               <label className="case-slider">
-                {id === "shortener" ? "Redirects" : "Orders"} per day: {daily}{" "}
-                million
+                {lesson.workloadLabel ||
+                  (id === "shortener" ? "Redirects" : "Orders")}{" "}
+                per day: {daily} million
                 <input
                   aria-label="Daily requests in millions"
                   type="range"
@@ -101,7 +103,9 @@ export default function CaseStudyLesson({ id, tab }) {
                 <p>
                   {id === "shortener"
                     ? "Estimated DB reads"
-                    : "Order transactions"}
+                    : lesson.workloadLabel
+                      ? "Primary operations"
+                      : "Order transactions"}
                   :{" "}
                   <strong>
                     {Math.ceil(estimate.storageReads).toLocaleString("en-US")}/s
@@ -112,7 +116,7 @@ export default function CaseStudyLesson({ id, tab }) {
                 Average = daily volume ÷ 86,400. Peak = average × multiplier.
                 {id === "shortener"
                   ? " DB reads = peak × (1 − hit rate); excludes writes, replication, and stampedes."
-                  : " One order transaction contains multiple writes. Provider calls, retries, and background events add separate load."}
+                  : " A primary operation can trigger multiple reads, writes, or fan-out events. Retries, byte transfers, and background work add separate load."}
               </p>
             </section>
           </div>
@@ -161,6 +165,7 @@ export default function CaseStudyLesson({ id, tab }) {
       )}
       {tab !== "code" && (
         <>
+          <FailureLab />
           <section className="case-block">
             <h2>Explain the decisions</h2>
             <div className="case-decision-grid">
@@ -211,9 +216,11 @@ export default function CaseStudyLesson({ id, tab }) {
           <div className="idea-card">
             <span className="overline">INTERVIEW FOLLOW-UP</span>
             <p>
-              {id === "shortener"
-                ? "What changes if every link must be revoked worldwide immediately? Explain the latency and availability cost, then change the cache and regional read policy."
-                : "What happens when a payment succeeds but its response is lost? Describe reconciliation before releasing inventory, and how you prevent a second charge."}
+              {lesson.workloadLabel
+                ? "Which assumption breaks first at ten times the traffic? Change the failure experiment, name the bottleneck, and explain which guarantee you would trade to recover. Would the model's cache and background-event assumptions apply unchanged to this design?"
+                : id === "shortener"
+                  ? "What changes if every link must be revoked worldwide immediately? Explain the latency and availability cost, then change the cache and regional read policy."
+                  : "What happens when a payment succeeds but its response is lost? Describe reconciliation before releasing inventory, and how you prevent a second charge."}
             </p>
           </div>
         </>

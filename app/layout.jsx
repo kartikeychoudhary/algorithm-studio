@@ -3,13 +3,14 @@ import "../styles/studio.css";
 import "../styles/interview.css";
 import "../styles/sidebar.css";
 import "../styles/learning.css";
+import "../styles/expansion.css";
 import { StudioProvider } from "../components/layout/StudioProvider.jsx";
 import StudioShell from "../components/layout/StudioShell.jsx";
 
 export const metadata = {
   title: "Algorithm Studio — Learn by seeing",
   description:
-    "Explore algorithms, engineering concepts, and software design patterns with interactive visual lessons.",
+    "Explore algorithms, engineering concepts, system design, and Spring with interactive visual lessons and interview practice.",
 };
 
 export default function RootLayout({ children }) {
