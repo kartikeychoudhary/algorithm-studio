@@ -114,39 +114,61 @@ export function SystemGraph({ nodes, links, layout }) {
   );
 }
 function Ring({ points }) {
+  const owners = [...new Set(points.map((p) => p.name))].sort();
   return (
-    <svg
-      className="systems-ring"
-      viewBox="0 0 500 420"
-      role="img"
-      aria-label="Consistent hash ring with virtual node positions"
-    >
-      <circle cx="250" cy="210" r="145" className="systems-ring-track" />
-      <text x="250" y="205" textAnchor="middle">
-        Clockwise ownership
-      </text>
-      <text x="250" y="228" textAnchor="middle">
-        0 … 999
-      </text>
-      {points.map((n, i) => {
-        const angle = (n.point / 1000) * Math.PI * 2 - Math.PI / 2,
-          x = 250 + 145 * Math.cos(angle),
-          y = 210 + 145 * Math.sin(angle);
-        return (
-          <g key={i}>
-            <title>{`${n.name} at ${n.point}`}</title>
-            <circle cx={f(x)} cy={f(y)} r="8" className={`ring-${n.name}`} />
-            <text
-              x={f(250 + 175 * Math.cos(angle))}
-              y={f(215 + 175 * Math.sin(angle))}
-              textAnchor="middle"
-            >
-              {n.name}:{n.point}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
+    <div className="systems-ring-layout">
+      <svg
+        className="systems-ring"
+        viewBox="0 0 500 420"
+        role="img"
+        aria-label="Consistent hash ring with virtual node positions"
+      >
+        <circle cx="250" cy="210" r="145" className="systems-ring-track" />
+        <text x="250" y="205" textAnchor="middle">
+          Clockwise ownership
+        </text>
+        <text x="250" y="228" textAnchor="middle">
+          0 … 999
+        </text>
+        <path className="ring-direction" d="M250 49 L258 57 L247 62" />
+        {points.map((n, i) => {
+          const angle = (n.point / 1000) * Math.PI * 2 - Math.PI / 2;
+          return (
+            <g key={i}>
+              <title>{`${n.name} at ${n.point}`}</title>
+              <circle
+                cx={f(250 + 145 * Math.cos(angle))}
+                cy={f(210 + 145 * Math.sin(angle))}
+                r="7"
+                className={`ring-${n.name}`}
+              />
+            </g>
+          );
+        })}
+      </svg>
+      <div className="systems-ring-legend">
+        <h3>Server positions</h3>
+        <p className="small-note">
+          Colors identify owners; positions increase clockwise from the top.
+        </p>
+        <dl>
+          {owners.map((owner) => (
+            <div key={owner}>
+              <dt>
+                <i className={`ring-${owner}`} aria-hidden="true" />
+                Server {owner}
+              </dt>
+              <dd>
+                {points
+                  .filter((p) => p.name === owner)
+                  .map((p) => p.point)
+                  .join(" · ")}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
   );
 }
 function Scatter({ points, query }) {

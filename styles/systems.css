@@ -433,3 +433,62 @@
     transition: none !important;
   }
 }
+.systems-ring-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+.systems-ring-legend {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.systems-ring-legend h3 {
+  margin: 0;
+  font-size: 15px;
+}
+.systems-ring-legend dl {
+  display: grid;
+  gap: 16px;
+}
+.systems-ring-legend dt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+}
+.systems-ring-legend dd {
+  margin: 6px 0 0 20px;
+  color: var(--secondary);
+  font: 12px monospace;
+  line-height: 1.8;
+}
+.systems-ring-legend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.systems-ring-layout .ring-B {
+  fill: #66a6e6 !important;
+  background: #66a6e6;
+}
+.systems-ring-layout .ring-C {
+  fill: #dfaa6a !important;
+  background: #dfaa6a;
+}
+.systems-ring-layout .ring-D {
+  fill: #67c5b4 !important;
+  background: #67c5b4;
+}
+.systems-ring .ring-direction {
+  fill: none;
+  stroke: var(--secondary);
+  stroke-width: 2;
+}
+@media (max-width: 700px) {
+  .systems-ring-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
