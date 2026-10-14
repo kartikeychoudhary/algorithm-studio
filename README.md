@@ -4,7 +4,7 @@
 
 **A visual workspace for algorithms, engineering concepts, system design, Spring, and LLMs.**
 
-103 lessons · 40 algorithms · 18 concepts · 23 patterns · 6 case studies · 8 Spring lessons · 5 LLM lessons · 3 practice tools
+150 lessons · 13 libraries · 40 algorithms · 37 systems labs · 11 Spring lessons · 12 LLM lessons
 
 [Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -59,7 +59,30 @@ See the [deployment setup guide](docs/cloudflare-deployment.md) for token permis
 
 ## 🧭 The playground
 
-Switch between seven focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, **LLM**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+Choose from 13 focused libraries using a compact sidebar selector: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, **LLM**, **Database Internals**, **Java & JVM**, **Operating Systems**, **Networking & Web Security**, **Distributed Systems Internals**, **Developer Tooling**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+
+### Inside the systems you use
+
+These 37 labs make infrastructure decisions visible. Edit the inputs, run a contrasting scenario, inspect the state, and follow highlighted pseudocode. Every lesson includes its assumptions and a primary reference.
+
+| Library                                                                         | Experiments                                                                                                                                 |
+| :------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| **[Database Internals](https://algo.kartikey.cv/lessons/db-bplus)**             | B+ tree splits and lookup, composite indexes, nested-loop versus hash joins, query costs, MVCC snapshots, WAL recovery.                     |
+| **[Java & JVM](https://algo.kartikey.cv/lessons/jvm-gc)**                       | Class loading, stack frames and heap references, tracing GC, HashMap collisions and resizing, bounded thread pools, virtual-thread I/O.     |
+| **[Operating Systems](https://algo.kartikey.cv/lessons/os-scheduling)**         | Processes versus threads, FCFS and round-robin scheduling, context-switch overhead, FIFO/LRU paging, TLB translations, deadlock prevention. |
+| **[Networking & Web Security](https://algo.kartikey.cv/lessons/web-tcp)**       | TCP loss and cumulative ACKs, congestion windows, HTTP cache revalidation, sessions, OAuth/OIDC with PKCE, CORS, CSRF.                      |
+| **[Distributed Systems Internals](https://algo.kartikey.cv/lessons/dist-raft)** | Raft replication, leader election, quorum intersections, consistent hashing, vector clocks, Bloom-filter false positives.                   |
+| **[Developer Tooling](https://algo.kartikey.cv/lessons/tool-compiler)**         | Git references, three-way merges, rebasing, dependency constraints, expression compilation, CI gates and deployment rollback.               |
+
+The numeric labs compute real results within their stated bounds. Protocol and framework flows model selected scenarios rather than running a real JVM, database, network, or deployment. Query costs, congestion control, dependency resolution, and GC are intentionally simplified; the lesson boundary explains what each model leaves out.
+
+### More Spring and LLM experiments
+
+- **Spring:** [JPA and N+1 queries](https://algo.kartikey.cv/lessons/spring-orm), REQUIRED versus REQUIRES_NEW with connection-pool pressure, and unit/MVC-slice/integration coverage.
+- **LLM mechanics:** [learn BPE merges](https://algo.kartikey.cv/lessons/llm-bpe), compare two attention heads, and verify incremental KV caching against a full forward pass.
+- **LLM applications:** [retrieval with evidence](https://algo.kartikey.cv/lessons/llm-rag), exact versus clustered vector search, 4/8-bit quantization error, and evaluation that separates token overlap from factual support.
+
+RAG uses a small fictional policy corpus and extractive answers. Vector search uses inspectable two-dimensional vectors. The two-head lab is an illustrative variation of the miniature decoder, not its trained checkpoint. No lesson calls a hosted LLM or requires credentials.
 
 ### Active practice
 
@@ -67,7 +90,7 @@ Switch between seven focused libraries: **Algorithms**, **Concepts**, **Design P
 - **[Compare approaches](https://algo.kartikey.cv/lessons/compare):** step a linear scan and binary search together; compare actual value comparisons and modeled auxiliary variables on the same sorted input.
 - **[Find the bug](https://algo.kartikey.cv/lessons/debug):** repair an inclusive search boundary and run failing/passing cases.
 - **[My study roadmap](https://algo.kartikey.cv/lessons/roadmap):** suggested prerequisites, bookmarks, confidence, a weak-topic review list, and manually tracked solved LeetCode questions. Progress is stored in this browser.
-- **Share traces:** the 24 named-input interview lessons and eight new algorithm labs can copy a URL containing validated inputs and the current execution step. Input values are visible to anyone with the link.
+- **Share traces:** the 24 named-input interview lessons eight new algorithm labs, and all 47 systems and framework extensions can copy a URL containing validated inputs and the current execution step. Input values are visible to anyone with the link.
 
 ### Spring, from startup to response
 
@@ -280,11 +303,13 @@ features/
   graphs/                   Grid, network, edge editor, and graph inspector
   spring/                   Startup, request lifecycle, and annotation walkthroughs
   llm/                      Decoder, attention, sampling, and gradient visualizations
+  systems/                  Shared experiment editor, diagrams, and systems playback
   practice/                 Study roadmap, comparison lab, and debugging exercises
 hooks/                      Playback, shared inputs, and local study progress
 lib/
   algorithms/               Pure solvers and immutable trace generators
   data/                     Lesson catalog, examples, pattern scenarios, and presets
+  simulations/              Pure database, JVM, OS, network, distributed, tooling, AI, and Spring models
   learning/                 Transaction, replica, and walkthrough state models
 styles/                     Responsive layout and theme tokens
 tests/                      Reference comparisons and React interaction tests
@@ -313,7 +338,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under seven focused libraries. Curated practice links live in `lib/data/practice.js`; the algorithm, foundation, Spring, LLM, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under 13 focused libraries. Curated practice links live in `lib/data/practice.js`; the algorithm, foundation, Spring, LLM, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
 
 </details>
 

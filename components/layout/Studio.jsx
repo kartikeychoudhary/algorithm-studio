@@ -20,6 +20,7 @@ import SpringLesson from "../../features/spring/SpringLesson.jsx";
 import PracticeLesson from "../../features/practice/PracticeLesson.jsx";
 import LessonProgress from "../learning/LessonProgress.jsx";
 import LlmLesson from "../../features/llm/LlmLesson.jsx";
+import SystemsLesson from "../../features/systems/SystemsLesson.jsx";
 
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
@@ -122,7 +123,9 @@ export default function Studio({ lessonId }) {
           aria-labelledby={`tab-${tab}`}
           key={lessonId}
         >
-          {lesson.kind === "llm" ? (
+          {lesson.kind === "systems-lab" ? (
+            <SystemsLesson id={lessonId} tab={tab} />
+          ) : lesson.kind === "llm" ? (
             <LlmLesson id={lessonId} tab={tab} />
           ) : lesson.kind === "spring" ? (
             <SpringLesson id={lessonId} tab={tab} />

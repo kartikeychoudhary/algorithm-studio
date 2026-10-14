@@ -73,9 +73,9 @@ it("filters by category, recovers from no results, and toggles the mobile librar
   expect(screen.getByRole("status").textContent).toContain("No lessons found");
   fireEvent.click(screen.getByRole("button", { name: "Show all lessons" }));
   expect(
-    screen.getByRole("button", { name: "Important Concepts" }),
+    screen.getByRole("option", { name: "Important Concepts" }),
   ).toBeTruthy();
-  expect(screen.getByRole("button", { name: "System Design" })).toBeTruthy();
+  expect(screen.getByRole("option", { name: "System Design" })).toBeTruthy();
   fireEvent.click(screen.getByRole("button", { name: "Lessons" }));
   expect(
     screen.getByRole("button", { name: "Close" }).getAttribute("aria-expanded"),
@@ -83,12 +83,10 @@ it("filters by category, recovers from no results, and toggles the mobile librar
 });
 it("collapsed categories persist while search temporarily reveals matching lessons", () => {
   const view = render(<Sidebar lessonId="coins" />);
-  expect(
-    screen
-      .getByRole("button", { name: "System Design" })
-      .getAttribute("aria-pressed"),
-  ).toBe("false");
-  fireEvent.click(screen.getByRole("button", { name: "System Design" }));
+  expect(screen.getByLabelText("Choose a library").value).toBe("algorithms");
+  fireEvent.change(screen.getByLabelText("Choose a library"), {
+    target: { value: "system-design" },
+  });
   fireEvent.click(screen.getByRole("button", { name: "Structural patterns" }));
   expect(screen.getByRole("link", { name: "Adapter" })).toBeTruthy();
   view.unmount();

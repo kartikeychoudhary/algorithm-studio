@@ -25,16 +25,6 @@ const names = {
   subsets: "Subsets",
   linked: "Reverse linked list",
 };
-const symbols = ["⌘", "◇", "▧", "◈", "♧", "✳", "✓"];
-const subtitles = [
-  "Solve & trace",
-  "Build understanding",
-  "Shape your code",
-  "Connect the pieces",
-  "Follow the framework",
-  "See the prediction",
-  "Test your understanding",
-];
 export default function Sidebar({ lessonId }) {
   const ancestors = lessonAncestors(lessonId);
   const [library, setLibrary] = useState(ancestors[0] || "algorithms");
@@ -183,28 +173,23 @@ export default function Sidebar({ lessonId }) {
             </button>
           )}
         </div>
-        <div className="library-switcher" aria-label="Choose a library">
-          {navigationSections.map((section, i) => (
-            <button
-              key={section.id}
-              className={library === section.id ? "selected" : ""}
-              aria-label={section.title}
-              aria-pressed={library === section.id}
-              onClick={() => {
-                setLibrary(section.id);
-                setQuery("");
-              }}
-            >
-              <span className="library-symbol" aria-hidden="true">
-                {symbols[i]}
-              </span>
-              <span>
-                <strong>{section.shortTitle || section.title}</strong>
-                <small>{subtitles[i]}</small>
-              </span>
-            </button>
-          ))}
-        </div>
+        <label className="library-picker">
+          Browse libraries
+          <select
+            aria-label="Choose a library"
+            value={library}
+            onChange={(e) => {
+              setLibrary(e.target.value);
+              setQuery("");
+            }}
+          >
+            {navigationSections.map((section) => (
+              <option key={section.id} value={section.id}>
+                {section.title}
+              </option>
+            ))}
+          </select>
+        </label>
         <div className="library-caption">
           <span>{term ? "SEARCH RESULTS" : currentSection?.title}</span>
           {!term && (

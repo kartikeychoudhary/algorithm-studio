@@ -93,11 +93,15 @@ it("focused libraries restore separate scroll positions and searching crosses li
   const nav = screen.getByRole("navigation", { name: "Learning library" });
   nav.scrollTop = 321;
   fireEvent.scroll(nav);
-  fireEvent.click(screen.getByRole("button", { name: "Case Studies" }));
+  fireEvent.change(screen.getByLabelText("Choose a library"), {
+    target: { value: "case-studies" },
+  });
   expect(nav.scrollTop).toBe(0);
   fireEvent.click(screen.getByRole("button", { name: "Read-heavy systems" }));
   expect(screen.getByRole("link", { name: "URL shortener" })).toBeTruthy();
-  fireEvent.click(screen.getByRole("button", { name: "Algorithms" }));
+  fireEvent.change(screen.getByLabelText("Choose a library"), {
+    target: { value: "algorithms" },
+  });
   expect(nav.scrollTop).toBe(321);
   fireEvent.change(screen.getByLabelText("Find a lesson"), {
     target: { value: "payment" },
