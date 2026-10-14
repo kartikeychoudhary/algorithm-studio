@@ -1,0 +1,565 @@
+.llm-lesson {
+  --llm-accent: #a994f0;
+  --llm-teal: #63c8bf;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  min-width: 0;
+}
+.llm-dot-lab {
+  margin: 24px 0;
+}
+.llm-dot-cells {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 16px;
+  overflow: auto;
+}
+.llm-dot-cells > div {
+  display: grid;
+  gap: 8px;
+  padding: 12px 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font: 11px monospace;
+}
+.llm-dot-cells > div.active {
+  border-color: var(--llm-teal);
+  background: color-mix(in srgb, var(--llm-teal) 12%, transparent);
+}
+.llm-dot-cells > div.complete strong {
+  color: var(--llm-teal);
+}
+@media (max-width: 600px) {
+  .llm-dot-cells {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.llm-model-note {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--llm-accent);
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--purple) 6%, transparent);
+}
+.llm-model-note p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: inherit;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin: 8px 0 0;
+}
+.llm-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--llm-teal);
+  margin-right: 8px;
+  box-shadow: 0 0 12px #63c8bf66;
+}
+.llm-prompt {
+  display: grid;
+  gap: 10px;
+}
+.llm-prompt > label {
+  font-size: 13px;
+  font-weight: 700;
+}
+.llm-prompt > div {
+  display: flex;
+  gap: 10px;
+}
+.llm-prompt input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: inherit;
+}
+.llm-presets {
+  flex-wrap: wrap;
+}
+.llm-presets button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+.llm-context {
+  padding: 22px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--purple) 10%, transparent);
+  border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.llm-context p {
+  margin: 10px 0;
+  font-size: clamp(19px, 2.5vw, 29px);
+  letter-spacing: -0.02em;
+}
+.llm-context small {
+  color: var(--llm-teal);
+}
+.llm-cursor {
+  color: var(--llm-accent);
+  animation: llm-blink 1.2s steps(2) infinite;
+}
+.llm-pipeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.llm-pipeline button {
+  position: relative;
+  text-align: left;
+  padding: 17px 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  overflow: hidden;
+}
+.llm-pipeline button > span {
+  font: 11px monospace;
+  opacity: 0.6;
+}
+.llm-pipeline button.complete {
+  color: var(--llm-teal);
+}
+.llm-pipeline button.active {
+  border-color: var(--llm-accent);
+  background: color-mix(in srgb, var(--purple) 16%, transparent);
+  box-shadow: 0 0 18px #997be918;
+}
+.llm-pipeline button.active i {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 40%;
+  background: var(--llm-accent);
+  animation: llm-flow 1.4s linear infinite;
+}
+.llm-stage {
+  border-left: 3px solid var(--llm-accent);
+  padding: 18px 24px;
+  background: color-mix(in srgb, var(--purple) 7%, transparent);
+  animation: llm-enter 0.28s ease-out;
+}
+.llm-stage h2 {
+  margin: 10px 0;
+}
+.llm-stage p,
+.llm-training > p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.llm-equation {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  margin: 18px 0;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--purple) 5%, transparent);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.llm-equation code {
+  font-size: 13px;
+  line-height: 1.85;
+  white-space: normal;
+  color: var(--llm-accent);
+}
+.llm-equation strong {
+  font-size: 13px;
+}
+.llm-matrix {
+  min-width: 0;
+  margin: 18px 0;
+}
+.llm-matrix h3,
+.llm-attention h3,
+.llm-distribution h3 {
+  font-size: 14px;
+  margin: 0 0 14px;
+}
+.llm-overflow {
+  max-width: 100%;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--purple) transparent;
+}
+.llm-lesson table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.llm-lesson th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+}
+.llm-matrix td,
+.llm-matrix th {
+  padding: 12px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+.llm-matrix td {
+  font-family: monospace;
+  text-align: right;
+}
+.llm-token-ribbon {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.llm-token-ribbon button {
+  display: grid;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+}
+.llm-token-ribbon button.active {
+  border-color: var(--llm-accent);
+  background: color-mix(in srgb, var(--purple) 18%, transparent);
+}
+.llm-token-ribbon small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.llm-attention th {
+  white-space: nowrap;
+  padding: 12px;
+}
+.llm-attention td {
+  padding: 2px;
+}
+.llm-attention td button {
+  min-width: 62px;
+  border: 1px solid transparent;
+  padding: 14px 6px;
+  border-radius: 5px;
+  font-size: 11px;
+  color: inherit;
+}
+.llm-attention td button.selected {
+  outline: 2px solid var(--llm-teal);
+  outline-offset: -2px;
+}
+.llm-arcs {
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.llm-arcs svg {
+  width: 100%;
+  min-width: 680px;
+  height: auto;
+}
+.llm-arcs path {
+  stroke: var(--llm-accent);
+}
+.llm-arcs text,
+.llm-loss text {
+  fill: currentColor;
+  font: 11px monospace;
+}
+.llm-signal {
+  stroke-dasharray: 9 5;
+  animation: llm-signal 2s linear infinite;
+}
+.llm-controls {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.llm-controls label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  flex: 1;
+  min-width: 120px;
+}
+.llm-controls label:has([type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  flex-basis: 100%;
+}
+.llm-controls input:not([type="checkbox"]),
+.llm-controls select {
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+.llm-controls select,
+.llm-controls input[type="number"] {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 9px;
+}
+.llm-controls input[type="range"],
+.llm-controls input[type="checkbox"] {
+  accent-color: var(--purple);
+}
+.llm-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.llm-section-title > span {
+  font-size: 12px;
+  color: var(--llm-teal);
+}
+.llm-candidates {
+  max-height: 380px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  scrollbar-color: var(--purple) transparent;
+  scrollbar-width: thin;
+}
+.llm-candidates td,
+.llm-candidates th {
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+.llm-candidates thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--llm-table-head, #191b26);
+}
+.llm-candidates td:last-child {
+  width: 50%;
+  min-width: 170px;
+}
+.llm-candidates tr.filtered {
+  opacity: 0.45;
+}
+.llm-candidates tr.chosen th {
+  color: var(--llm-teal);
+  font-weight: 700;
+}
+.llm-prob-bar {
+  position: relative;
+  height: 24px;
+  background: color-mix(in srgb, var(--purple) 7%, transparent);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.llm-prob-bar i {
+  display: block;
+  height: 100%;
+  background: color-mix(in srgb, var(--purple) 55%, transparent);
+  transition: width 0.4s ease;
+}
+.llm-prob-bar span {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-size: 11px;
+}
+.llm-cdf {
+  height: 36px;
+  display: flex;
+  position: relative;
+  border-radius: 6px;
+  margin: 18px 0;
+}
+.llm-cdf div {
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  color: white;
+  transition: width 0.4s ease;
+}
+.llm-cdf > i {
+  position: absolute;
+  height: 48px;
+  width: 2px;
+  background: var(--llm-teal);
+  top: -6px;
+  transition: left 0.4s ease;
+}
+.llm-cdf > i:before {
+  content: "▼";
+  position: absolute;
+  top: -12px;
+  left: -5px;
+  font-size: 12px;
+  color: var(--llm-teal);
+}
+.llm-next {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--llm-teal) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--llm-teal) 35%, transparent);
+  border-radius: 14px;
+}
+.llm-next > div {
+  display: grid;
+  gap: 10px;
+  flex: 1;
+}
+.llm-next strong {
+  color: var(--llm-teal);
+  font-size: 30px;
+}
+.llm-next small {
+  flex-basis: 100%;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.llm-weights {
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 12px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.llm-weights summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.llm-weights li {
+  padding: 3px;
+}
+.llm-warning {
+  border-left: 3px solid #d6ab61;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.llm-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.llm-metrics > div {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: grid;
+  gap: 12px;
+}
+.llm-metrics small {
+  font-size: 11px;
+  color: var(--muted);
+}
+.llm-metrics strong {
+  font-size: 20px;
+  color: var(--llm-teal);
+}
+.llm-loss svg {
+  width: 100%;
+}
+.llm-loss polyline {
+  fill: none;
+  stroke: var(--llm-teal);
+  stroke-width: 3;
+}
+.llm-loss line {
+  stroke: var(--border);
+}
+[data-theme="light"] .llm-lesson {
+  --llm-accent: #6944c8;
+  --llm-teal: #197970;
+  --llm-table-head: #f8f7fc;
+}
+@keyframes llm-flow {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(350%);
+  }
+}
+@keyframes llm-signal {
+  to {
+    stroke-dashoffset: -56;
+  }
+}
+@keyframes llm-enter {
+  from {
+    opacity: 0.4;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes llm-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+@media (max-width: 600px) {
+  .llm-pipeline {
+    gap: 6px;
+  }
+  .llm-pipeline button {
+    font-size: 10px;
+    padding: 12px 8px;
+    gap: 5px;
+  }
+  .llm-prompt > div:first-of-type {
+    flex-wrap: wrap;
+  }
+  .llm-prompt input {
+    flex-basis: 100%;
+  }
+  .llm-stage {
+    padding: 15px;
+  }
+  .llm-equation {
+    padding: 14px;
+  }
+  .llm-metrics > div {
+    padding: 12px;
+  }
+  .llm-metrics strong {
+    font-size: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .llm-lesson *,
+  .llm-lesson *:before {
+    animation: none !important;
+    transition: none !important;
+  }
+}

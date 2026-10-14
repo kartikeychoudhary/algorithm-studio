@@ -2,9 +2,9 @@
 
 ![Algorithm Studio — Understand the why. Watch the how.](docs/assets/cover.svg)
 
-**A visual workspace for algorithms, engineering concepts, system design, and Spring.**
+**A visual workspace for algorithms, engineering concepts, system design, Spring, and LLMs.**
 
-98 lessons · 40 algorithms · 18 concepts · 23 patterns · 6 case studies · 8 Spring lessons · 3 practice tools
+103 lessons · 40 algorithms · 18 concepts · 23 patterns · 6 case studies · 8 Spring lessons · 5 LLM lessons · 3 practice tools
 
 [Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -59,7 +59,7 @@ See the [deployment setup guide](docs/cloudflare-deployment.md) for token permis
 
 ## 🧭 The playground
 
-Switch between six focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+Switch between seven focused libraries: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, **LLM**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
 
 ### Active practice
 
@@ -83,6 +83,20 @@ Switch between six focused libraries: **Algorithms**, **Concepts**, **Design Pat
 | **[Annotation explorer](https://algo.kartikey.cv/lessons/spring-annotations)** | Search 32 annotations; inspect examples, processors, behavioral diagrams, prerequisites, and pitfalls.                                                                               |
 
 Spring examples model servlet-based Spring MVC unless stated otherwise. They describe framework behavior without running Java in the browser. Lessons link to official Spring references; proxies, transaction scope, validation, and response timing are explicit.
+
+### LLMs, from numbers to the next token
+
+Open the **[next-token prediction lab](https://algo.kartikey.cv/lessons/llm-prediction)** and follow a nine-stage forward pass. Every score is computed locally by an inspectable miniature causal decoder: 36 vocabulary items, eight dimensions, one attention head, and one block.
+
+| Lesson                    | Explore                                                                                                                                            |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Next-token prediction** | Tokenization → embeddings → Q/K/V → causal attention → residuals → feed-forward network → logits → softmax → selection; append a token and repeat. |
+| **Tokens & embeddings**   | Greedy subword segmentation, token IDs, unknown words, lookup vectors, and sinusoidal positions.                                                   |
+| **Attention math**        | Select any query/key pair, animate its multiply-and-add, inspect the causal mask and weighted value contributions.                                 |
+| **Softmax & sampling**    | Temperature, top-k, top-p, seed-controlled sampling, cumulative intervals, entropy, and greedy decoding.                                           |
+| **Training & gradients**  | Cross-entropy, actual output-head gradients, weight updates, target probability, and loss on one training example.                                 |
+
+The output head was trained on 20 public synthetic sentences included in the model card; embeddings and decoder projections remain fixed illustrative values. This is a teaching model, not a production LLM or a hidden API integration. All parameters are inspectable, and animations respect reduced-motion preferences. Reproduce the checkpoint with `node scripts/train-llm.mjs` (then format the generated file). Full models generally train their entire network; this exercise deliberately isolates the output head.
 
 ### More algorithm and foundation labs
 
@@ -265,6 +279,7 @@ features/
   knapsack/                 Inventory and dynamic programming table
   graphs/                   Grid, network, edge editor, and graph inspector
   spring/                   Startup, request lifecycle, and annotation walkthroughs
+  llm/                      Decoder, attention, sampling, and gradient visualizations
   practice/                 Study roadmap, comparison lab, and debugging exercises
 hooks/                      Playback, shared inputs, and local study progress
 lib/
@@ -298,7 +313,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under six focused libraries. Curated practice links live in `lib/data/practice.js`; the new algorithm, foundation, Spring, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under seven focused libraries. Curated practice links live in `lib/data/practice.js`; the algorithm, foundation, Spring, LLM, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
 
 </details>
 

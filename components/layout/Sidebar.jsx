@@ -25,13 +25,14 @@ const names = {
   subsets: "Subsets",
   linked: "Reverse linked list",
 };
-const symbols = ["⌘", "◇", "▧", "◈", "♧", "✓"];
+const symbols = ["⌘", "◇", "▧", "◈", "♧", "✳", "✓"];
 const subtitles = [
   "Solve & trace",
   "Build understanding",
   "Shape your code",
   "Connect the pieces",
   "Follow the framework",
+  "See the prediction",
   "Test your understanding",
 ];
 export default function Sidebar({ lessonId }) {

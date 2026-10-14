@@ -4,6 +4,7 @@ import "../styles/interview.css";
 import "../styles/sidebar.css";
 import "../styles/learning.css";
 import "../styles/expansion.css";
+import "../styles/llm.css";
 import { StudioProvider } from "../components/layout/StudioProvider.jsx";
 import StudioShell from "../components/layout/StudioShell.jsx";
 
