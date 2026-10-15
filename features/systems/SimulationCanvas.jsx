@@ -237,6 +237,35 @@ export default function SimulationCanvas({ event: e }) {
           </details>
         </>
       )}
+      {e.waterfall && (
+        <section
+          className="trace-waterfall"
+          aria-label="Request span waterfall"
+        >
+          <h3>Request timeline · milliseconds</h3>
+          {e.waterfall.map((span, i) => (
+            <div className="waterfall-row" key={i}>
+              <span>
+                {span.name}
+                <small>
+                  {span.trace} · parent: {span.parent}
+                </small>
+              </span>
+              <div className="waterfall-track">
+                <i
+                  style={{
+                    marginLeft: `${((span.start / e.waterfall[0].duration) * 100).toFixed(3)}%`,
+                    width: `${((span.duration / e.waterfall[0].duration) * 100).toFixed(3)}%`,
+                  }}
+                />
+              </div>
+              <strong>
+                {span.start}–{span.start + span.duration}
+              </strong>
+            </div>
+          ))}
+        </section>
+      )}
       {e.ring && <Ring points={e.ring} />}
       {e.scatter && <Scatter {...e.scatter} />}
       {e.cells && (

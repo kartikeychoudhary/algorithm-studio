@@ -5,6 +5,20 @@ export default function LessonProgress({ id }) {
     p = progress[id] || {};
   return (
     <div className="lesson-progress">
+      <label className="lesson-done">
+        <input
+          type="checkbox"
+          checked={!!p.completed}
+          aria-label="Lesson completed"
+          onChange={(e) =>
+            update(id, {
+              completed: e.target.checked,
+              completedAt: e.target.checked ? Date.now() : null,
+            })
+          }
+        />{" "}
+        Done
+      </label>
       <button
         className="button"
         aria-pressed={!!p.bookmark}

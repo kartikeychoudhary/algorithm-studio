@@ -6,6 +6,7 @@ import "../styles/learning.css";
 import "../styles/expansion.css";
 import "../styles/llm.css";
 import "../styles/systems.css";
+import "../styles/guides.css";
 import { StudioProvider } from "../components/layout/StudioProvider.jsx";
 import StudioShell from "../components/layout/StudioShell.jsx";
 

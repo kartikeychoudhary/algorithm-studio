@@ -1,12 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { priorityLessons } from "../lib/data/priority-lessons.js";
 import { deepLessons } from "../lib/data/deep-lessons.js";
 import { models, runSystems } from "../lib/simulations/index.js";
 const run = (id, p = {}) => runSystems(id, { ...deepLessons[id].input, ...p });
 const result = (id, p) => run(id, p).result;
 test("all 47 labs have deterministic bounded traces and valid visual references", () => {
   assert.equal(Object.keys(deepLessons).length, 47);
-  assert.deepEqual(Object.keys(models).sort(), Object.keys(deepLessons).sort());
+  assert.deepEqual(
+    Object.keys(models).sort(),
+    Object.keys({ ...deepLessons, ...priorityLessons }).sort(),
+  );
   for (const [id, l] of Object.entries(deepLessons))
     for (const patch of [{}, l.alternative.patch]) {
       const input = { ...l.input, ...patch },

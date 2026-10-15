@@ -68,7 +68,7 @@ it("filters by category, recovers from no results, and toggles the mobile librar
     screen
       .getByRole("navigation", { name: "Learning library" })
       .querySelectorAll("a").length,
-  ).toBe(7);
+  ).toBe(10);
   fireEvent.change(input, { target: { value: "does not exist" } });
   expect(screen.getByRole("status").textContent).toContain("No lessons found");
   fireEvent.click(screen.getByRole("button", { name: "Show all lessons" }));

@@ -7,7 +7,7 @@ export default function StudioShell({ children }) {
   const pathname = usePathname();
   const lessonId = pathname?.startsWith("/lessons/")
     ? pathname.split("/")[2]
-    : "ttt";
+    : "roadmap";
   return (
     <div id="app">
       <Sidebar lessonId={lessonId} />

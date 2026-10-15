@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { deepLessons } from "../../lib/data/deep-lessons.js";
+import { lessons } from "../../lib/data/lessons.js";
 import { runSystems } from "../../lib/simulations/index.js";
 import { useSharedInput } from "../../hooks/useSharedInput.js";
 import { usePlayback } from "../../hooks/usePlayback.js";
@@ -10,7 +10,7 @@ import ShareTrace from "../../components/learning/ShareTrace.jsx";
 import ExperimentEditor from "./ExperimentEditor.jsx";
 import SimulationCanvas from "./SimulationCanvas.jsx";
 export default function SystemsLesson({ id, tab }) {
-  const lesson = deepLessons[id];
+  const lesson = lessons[id];
   const { input, setInput, start, shareError } = useSharedInput(
     id,
     lesson.input,

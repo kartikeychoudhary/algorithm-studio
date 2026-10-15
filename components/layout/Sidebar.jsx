@@ -153,6 +153,13 @@ export default function Sidebar({ lessonId }) {
         </button>
       </div>
       <div className="library-body" id="lesson-library">
+        <Link
+          className="library-guide-link"
+          href="/lessons/roadmap"
+          onClick={() => setMobileOpen(false)}
+        >
+          ✦ Goal-based study guides <span aria-hidden="true">↗</span>
+        </Link>
         <div className="library-search">
           <span aria-hidden="true">⌕</span>
           <input

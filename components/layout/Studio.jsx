@@ -22,6 +22,9 @@ import LessonProgress from "../learning/LessonProgress.jsx";
 import LlmLesson from "../../features/llm/LlmLesson.jsx";
 import SystemsLesson from "../../features/systems/SystemsLesson.jsx";
 
+import IncidentLesson from "../../features/practice/IncidentLesson.jsx";
+import StudyJourney from "../../features/guides/StudyJourney.jsx";
+
 export default function Studio({ lessonId }) {
   const [tab, setTab] = useState("lab");
   const { theme, toggleTheme } = useStudio();
@@ -74,56 +77,73 @@ export default function Studio({ lessonId }) {
             </div>
           )}
         </div>
-        <LessonProgress id={lessonId} />
-        <div className="lesson-tabs">
-          <div role="tablist" aria-label="Lesson view">
-            {[
-              [
-                "lab",
-                lesson.kind === "case-study"
-                  ? "▦ Architecture"
-                  : "▦ Playground",
-              ],
-              [
-                "learn",
-                lesson.kind === "case-study"
-                  ? "▤ Decisions & failures"
-                  : "▤ How it works",
-              ],
-              [
-                "code",
-                lesson.kind === "case-study"
-                  ? "⌘ Request flow"
-                  : lesson.kind
-                    ? "⌘ Walkthrough"
-                    : "⌘ Pseudocode",
-              ],
-            ].map(([id, label]) => (
-              <button
-                key={id}
-                id={`tab-${id}`}
-                role="tab"
-                aria-selected={tab === id}
-                aria-controls="lesson-panel"
-                className={tab === id ? "active" : ""}
-                onClick={() => setTab(id)}
-              >
-                {label}
-              </button>
-            ))}
+        {lessonId !== "roadmap" && (
+          <>
+            <LessonProgress id={lessonId} />
+            <StudyJourney id={lessonId} />
+          </>
+        )}
+        {lessonId !== "roadmap" && lesson.kind !== "incident" && (
+          <div className="lesson-tabs">
+            <div role="tablist" aria-label="Lesson view">
+              {[
+                [
+                  "lab",
+                  lesson.kind === "case-study"
+                    ? "▦ Architecture"
+                    : "▦ Playground",
+                ],
+                [
+                  "learn",
+                  lesson.kind === "case-study"
+                    ? "▤ Decisions & failures"
+                    : "▤ How it works",
+                ],
+                [
+                  "code",
+                  lesson.kind === "case-study"
+                    ? "⌘ Request flow"
+                    : lesson.kind
+                      ? "⌘ Walkthrough"
+                      : "⌘ Pseudocode",
+                ],
+              ].map(([id, label]) => (
+                <button
+                  key={id}
+                  id={`tab-${id}`}
+                  role="tab"
+                  aria-selected={tab === id}
+                  aria-controls="lesson-panel"
+                  className={tab === id ? "active" : ""}
+                  onClick={() => setTab(id)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <span className="tab-note">
+              <span className="status-dot" />
+              Learn by doing
+            </span>
           </div>
-          <span className="tab-note">
-            <span className="status-dot" />
-            Learn by doing
-          </span>
-        </div>
+        )}
         <section
-          role="tabpanel"
+          role={
+            lessonId === "roadmap" || lesson.kind === "incident"
+              ? undefined
+              : "tabpanel"
+          }
           id="lesson-panel"
-          aria-labelledby={`tab-${tab}`}
+          aria-labelledby={
+            lessonId === "roadmap" || lesson.kind === "incident"
+              ? undefined
+              : `tab-${tab}`
+          }
           key={lessonId}
         >
-          {lesson.kind === "systems-lab" ? (
+          {lesson.kind === "incident" ? (
+            <IncidentLesson id={lessonId} />
+          ) : lesson.kind === "systems-lab" ? (
             <SystemsLesson id={lessonId} tab={tab} />
           ) : lesson.kind === "llm" ? (
             <LlmLesson id={lessonId} tab={tab} />

@@ -1,0 +1,538 @@
+.study-guides {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+.goal-intro h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -1px;
+  margin: 12px 0;
+}
+.goal-intro p {
+  max-width: 720px;
+  color: var(--secondary);
+  line-height: 1.8;
+}
+.goal-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.goal-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  color: var(--ink);
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  cursor: pointer;
+}
+.goal-card:hover,
+.goal-card.selected {
+  border-color: var(--accent);
+  background: var(--purple-light);
+}
+.goal-card strong {
+  font-size: 18px;
+  line-height: 1.45;
+}
+.goal-card > span:not(.overline) {
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--secondary);
+  flex: 1;
+}
+.goal-card small {
+  font-size: 11px;
+  color: var(--secondary);
+}
+.study-guides progress {
+  appearance: none;
+  display: block;
+  height: 5px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background: var(--border);
+  color: var(--accent);
+}
+.study-guides progress::-webkit-progress-bar {
+  background: var(--border);
+  border-radius: 5px;
+}
+.study-guides progress::-webkit-progress-value {
+  background: var(--accent);
+  border-radius: 5px;
+}
+.study-guides progress::-moz-progress-bar {
+  background: var(--accent);
+  border-radius: 5px;
+}
+.goal-plan {
+  min-width: 0;
+  display: grid;
+  gap: 22px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.goal-plan-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.goal-plan-heading h2 {
+  margin: 9px 0;
+  font-size: 27px;
+}
+.goal-plan-heading p {
+  color: var(--secondary);
+  font-size: 13px;
+}
+.goal-plan-heading > strong {
+  font-size: 27px;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.goal-plan-heading small {
+  display: block;
+  font-size: 11px;
+  color: var(--secondary);
+  font-weight: 400;
+  margin-top: 7px;
+}
+.goal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.goal-actions label {
+  display: grid;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--secondary);
+}
+.goal-actions select {
+  max-width: 100%;
+  min-width: 155px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
+  padding: 10px;
+}
+.study-method {
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  border-radius: 12px;
+}
+.study-method p {
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+.goal-stage {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  min-width: 0;
+  overflow: hidden;
+}
+.goal-stage > header {
+  display: flex;
+  align-items: start;
+  gap: 15px;
+  padding: 22px;
+  background: var(--surface);
+}
+.goal-stage header h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.goal-stage header p {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--secondary);
+}
+.goal-stage header > small {
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--secondary);
+  font-size: 11px;
+}
+.stage-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--purple-light);
+  color: var(--accent);
+  font-size: 12px;
+}
+.goal-table-scroll {
+  overflow-x: auto;
+}
+.goal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+.goal-table caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.goal-table th,
+.goal-table td {
+  border-top: 1px solid var(--border);
+  padding: 16px;
+  vertical-align: top;
+}
+.goal-table thead th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--secondary);
+}
+.goal-table tbody th {
+  min-width: 175px;
+  font-weight: 500;
+}
+.goal-table td:nth-child(3) {
+  min-width: 100px;
+  color: var(--secondary);
+}
+.goal-table td:last-child {
+  min-width: 190px;
+  max-width: 290px;
+}
+.goal-table a {
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.6;
+}
+.goal-table a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.goal-table td:last-child a {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: var(--secondary);
+}
+.goal-table input,
+.lesson-done input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.goal-table .is-complete {
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.goal-next {
+  display: block;
+  width: fit-content;
+  color: var(--accent);
+  font-size: 10px;
+  margin-top: 5px;
+}
+.goal-muted {
+  font-size: 11px;
+  color: var(--secondary);
+}
+.goal-empty {
+  padding: 22px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.stage-checkpoint {
+  border-top: 1px solid var(--border);
+  padding: 18px 22px;
+  background: var(--surface-soft);
+}
+.stage-checkpoint strong {
+  color: var(--accent);
+  font-size: 11px;
+}
+.stage-checkpoint p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--secondary);
+  margin: 5px 0 0;
+}
+.library-guide-link {
+  margin: 0 18px 16px;
+  border: 1px solid var(--border);
+  background: var(--purple-light);
+  padding: 12px;
+  border-radius: 9px;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lesson-done {
+  gap: 7px;
+  display: flex;
+  align-items: center;
+}
+.study-journey {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0 28px;
+}
+.study-journey > div:first-child {
+  display: grid;
+  gap: 9px;
+}
+.study-journey > div:first-child > span:last-child {
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.journey-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.study-journey a {
+  font-size: 12px;
+  color: var(--accent);
+}
+.study-journey a.primary {
+  color: white;
+  text-decoration: none;
+}
+.outside-goal {
+  color: var(--secondary);
+  font-size: 12px;
+}
+.trace-waterfall {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.trace-waterfall h3 {
+  font-size: 15px;
+  margin: 0 0 20px;
+}
+.waterfall-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(80px, 2fr) 70px;
+  gap: 12px;
+  align-items: center;
+  margin: 17px 0;
+  font-size: 12px;
+}
+.waterfall-row small {
+  display: block;
+  color: var(--secondary);
+  font-size: 10px;
+  margin-top: 4px;
+}
+.waterfall-track {
+  background: var(--surface);
+  border-radius: 4px;
+  min-width: 0;
+}
+.waterfall-track i {
+  display: block;
+  height: 19px;
+  background: var(--accent);
+  border-radius: 3px;
+}
+.waterfall-row strong {
+  font: 11px monospace;
+  color: var(--secondary);
+}
+.incident-lab {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+.incident-brief,
+.incident-options,
+.incident-result {
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  min-width: 0;
+}
+.incident-lab h2 {
+  font-size: 22px;
+}
+.incident-lab p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--secondary);
+}
+.incident-brief table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.incident-brief caption {
+  text-align: left;
+  padding: 14px 0;
+  color: var(--accent);
+}
+.incident-brief th,
+.incident-brief td {
+  padding: 13px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.incident-brief td {
+  color: var(--secondary);
+}
+.incident-options legend {
+  padding: 0 10px;
+  font-size: 14px;
+}
+.incident-options > label {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 15px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.incident-options input {
+  margin-top: 4px;
+  accent-color: var(--accent);
+}
+.incident-options .incident-reason {
+  display: grid;
+}
+.incident-options textarea {
+  width: 100%;
+  min-height: 85px;
+  resize: vertical;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 12px;
+  border-radius: 8px;
+  font: inherit;
+}
+.incident-comparison {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 25px 0;
+}
+.incident-comparison > div {
+  flex: 1;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+}
+.incident-comparison small {
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.incident-comparison strong {
+  display: block;
+  color: var(--accent);
+  font-size: 32px;
+  margin-top: 10px;
+}
+.incident-result summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--accent);
+}
+@media (max-width: 1150px) {
+  .goal-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .study-journey {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .journey-actions {
+    align-items: flex-start;
+  }
+}
+@media (max-width: 600px) {
+  .goal-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .goal-card {
+    padding: 18px;
+  }
+  .goal-plan-heading {
+    flex-direction: column;
+    align-items: start;
+  }
+  .goal-stage > header {
+    padding: 16px;
+    gap: 10px;
+  }
+  .goal-stage header > small {
+    display: none;
+  }
+  .goal-table th,
+  .goal-table td {
+    padding: 12px;
+  }
+  .incident-brief,
+  .incident-options,
+  .incident-result {
+    padding: 17px;
+  }
+  .trace-waterfall {
+    padding: 12px;
+  }
+  .waterfall-row {
+    grid-template-columns: 85px minmax(50px, 1fr) 50px;
+    gap: 7px;
+  }
+  .incident-comparison {
+    gap: 10px;
+  }
+}
+.goal-change {
+  justify-self: start;
+}
+.incident-recovery {
+  display: grid;
+  gap: 15px;
+  margin: 20px 0;
+}
+.study-method summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}

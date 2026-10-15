@@ -4,7 +4,7 @@
 
 **A visual workspace for algorithms, engineering concepts, system design, Spring, and LLMs.**
 
-150 lessons · 13 libraries · 40 algorithms · 37 systems labs · 11 Spring lessons · 12 LLM lessons
+169 lessons & labs · 15 libraries · 7 goal-based guides · 48 algorithms · 4 incident challenges
 
 [Live demo ↗](https://algo.kartikey.cv) · [Start locally](#-start-in-two-commands) · [Explore the lessons](#-the-playground) · [Study path](#-a-path-through-the-patterns) · [Architecture](#-built-to-grow)
 
@@ -59,7 +59,7 @@ See the [deployment setup guide](docs/cloudflare-deployment.md) for token permis
 
 ## 🧭 The playground
 
-Choose from 13 focused libraries using a compact sidebar selector: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, **LLM**, **Database Internals**, **Java & JVM**, **Operating Systems**, **Networking & Web Security**, **Distributed Systems Internals**, **Developer Tooling**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
+Choose from 15 focused libraries using a compact sidebar selector: **Algorithms**, **Concepts**, **Design Patterns**, **Case Studies**, **Spring**, **LLM**, **Database Internals**, **Java & JVM**, **Operating Systems**, **Networking & Web Security**, **Distributed Systems Internals**, **Developer Tooling**, **Messaging & Streaming**, **Observability**, and **Practice**. Each has collapsible topics and its own saved scroll position. Global search finds lessons across every library, and a persistent current-lesson shortcut takes you back to what you were studying. Dark and light themes include matching scrollbars.
 
 ### Inside the systems you use
 
@@ -84,13 +84,33 @@ The numeric labs compute real results within their stated bounds. Protocol and f
 
 RAG uses a small fictional policy corpus and extractive answers. Vector search uses inspectable two-dimensional vectors. The two-head lab is an illustrative variation of the miniature decoder, not its trained checkpoint. No lesson calls a hosted LLM or requires credentials.
 
+### Learn toward a goal
+
+The home page opens your study guides. Choose **Data Structures**, **Coding Interviews**, **Java & Spring**, **System Design**, **LLMs**, **Production Debugging**, or **Computer & Database Internals**. Each guide shows only its relevant lessons, in an ordered table with done checkboxes and linked practice questions where appropriate.
+
+- **Start or continue:** open the first incomplete lesson. Inside a lesson, mark it complete and move to the next unfinished step, or return to the checklist.
+- **Keep completion separate from confidence:** a finished lesson can still need review. Shared lessons retain completion when you switch goals.
+- **Study by stage:** follow an outcome and an explanation checkpoint before moving on. The focused data-structures guide has 13 lessons; the full coding-interview guide has 49, including complexity and all 48 algorithms.
+- **Return later:** the selected goal, checkboxes, bookmarks, confidence, and manually marked practice problems persist in local browser storage. There is no account sync; clearing browser data removes that progress.
+
+### Messaging, observability, and incident response
+
+| Library                                                                      | Hands-on experiments                                                                                                                                                                                                             |
+| :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **[Messaging & Streaming](https://algo.kartikey.cv/lessons/msg-partitions)** | Keyed partition logs, per-partition offsets, consumer groups and reassignment, crash windows and duplicate effects, growing lag and bounded admission.                                                                           |
+| **[Observability](https://algo.kartikey.cv/lessons/obs-traces)**             | Parallel span waterfalls, context propagation and correlated logs, nearest-rank latency percentiles, request-based SLOs and error budgets.                                                                                       |
+| **[Incident challenges](https://algo.kartikey.cv/lessons/incident-cache)**   | Diagnose a cache stampede, connection-pool exhaustion, growing consumer lag, and duplicate payments. Choose a mitigation, inspect its recovery trace, and explain what must be verified.                                         |
+| **Advanced algorithms**                                                      | Fenwick and segment trees, monotonic deques, Kruskal MST, strongly connected components, bridges, KMP, and bitmask subset DP. Inputs are editable, traces come from the actual solvers, and applicable lessons link to LeetCode. |
+
+Incident scenarios are fictional and bounded. Their explanations distinguish a mitigation from a complete operational remedy; for example, preventing a duplicate on replay does not refund an existing duplicate charge.
+
 ### Active practice
 
 - **Predict before revealing:** choose the next event in a narrated trace before advancing. Regular playback remains available when prediction mode is off.
 - **[Compare approaches](https://algo.kartikey.cv/lessons/compare):** step a linear scan and binary search together; compare actual value comparisons and modeled auxiliary variables on the same sorted input.
 - **[Find the bug](https://algo.kartikey.cv/lessons/debug):** repair an inclusive search boundary and run failing/passing cases.
-- **[My study roadmap](https://algo.kartikey.cv/lessons/roadmap):** suggested prerequisites, bookmarks, confidence, a weak-topic review list, and manually tracked solved LeetCode questions. Progress is stored in this browser.
-- **Share traces:** the 24 named-input interview lessons eight new algorithm labs, and all 47 systems and framework extensions can copy a URL containing validated inputs and the current execution step. Input values are visible to anyone with the link.
+- **[Goal-based study guides](https://algo.kartikey.cv/lessons/roadmap):** seven focused routes with ordered lesson tables, completion checkboxes, stage checkpoints, practice links, and a “mark complete & continue” flow. Completion and confidence are separate; bookmarks and weak-topic review remain available. Progress is stored in this browser.
+- **Share traces:** the 24 named-input interview lessons, eight earlier algorithm labs, and all 62 systems, framework, and advanced-algorithm experiments can copy a URL containing validated inputs and the current execution step. Input values are visible to anyone with the link.
 
 ### Spring, from startup to response
 
@@ -295,6 +315,7 @@ components/
   execution/                Pseudocode, variables, explanations, playback controls
   ui/                       Shared panels and validated numeric fields
 features/
+  guides/                   Goal selection, ordered checklists, and lesson-to-lesson progression
   concepts/                 ACID, CAP, growth explorer, and principle lessons
   design/                   Design patterns and end-to-end case studies
   interview/                Editors, arrays, structures, and trace-state panels
@@ -338,7 +359,7 @@ Lesson inputs persist across navigation in the shared React provider; reloading 
 4. Register the solver in `lib/algorithms/interview.js`; extend the visual components if the algorithm needs a new representation.
 5. Add an independent correctness check and an interaction test.
 
-The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under 13 focused libraries. Curated practice links live in `lib/data/practice.js`; the algorithm, foundation, Spring, LLM, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
+The route and lesson guide are driven by the catalog. Add each lesson to its category in `lib/data/navigation.js`; categories live under 15 focused libraries. Curated practice links live in `lib/data/practice.js`; the algorithm, foundation, Spring, LLM, practice, and case-study catalogs have dedicated files in `lib/data/`. Solvers stay separate from React presentation.
 
 </details>
 
